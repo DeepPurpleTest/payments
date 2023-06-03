@@ -1,0 +1,12 @@
+databaseChangeLog:
+  ### changes
+  - include:
+      file: db/changelog/changeset/role-entity.yaml
+  - include:
+      file: db/changelog/changeset/user-entity.yaml
+
+  ### datasets
+  - include:
+      file: db/changelog/dataset/role-dataset.xml
+  - include:
+      file: db/changelog/dataset/user-dataset.xml
