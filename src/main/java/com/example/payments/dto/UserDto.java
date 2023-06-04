@@ -2,9 +2,7 @@ package com.example.payments.dto;
 
 import com.example.payments.util.ApplicationConstants.Validation;
 import jakarta.annotation.Nullable;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
 
@@ -12,6 +10,8 @@ import org.hibernate.validator.constraints.Length;
 @Setter
 @Builder
 @Jacksonized
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
     @Nullable
     private Long id;
@@ -29,6 +29,4 @@ public class UserDto {
             message = Validation.MIDDLE_NAME_MESSAGE)
     private String middleName;
     private String phoneNumber;
-    @Nullable
-    private String password;
 }

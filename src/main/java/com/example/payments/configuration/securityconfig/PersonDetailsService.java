@@ -17,7 +17,7 @@ public class PersonDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> byPhoneNumber = userRepository.findByPhoneNumber(username);
+        Optional<User> byPhoneNumber = userRepository.findByPhoneNumber(username, User.class);
         if(byPhoneNumber.isEmpty()) {
             throw new UserNotFoundException("User with this phone number is not exist");
         }
