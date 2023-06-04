@@ -3,10 +3,18 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/role-entity.yaml
   - include:
+      file: db/changelog/changeset/status-entity.yaml
+  - include:
       file: db/changelog/changeset/user-entity.yaml
+  - include:
+      file: db/changelog/changeset/card-entity.yaml
 
   ### datasets
   - include:
       file: db/changelog/dataset/role-dataset.xml
   - include:
+      file: db/changelog/dataset/status-dataset.xml
+  - include:
       file: db/changelog/dataset/user-dataset.xml
+  - include:
+      file: db/changelog/dataset/card-dataset.xml

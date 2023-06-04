@@ -4,15 +4,15 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="role dataset" author="moksem">
-        <insert tableName="role">
-            <column name="id" value="ADMIN"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" value="CLIENT"/>
+    <changeSet id="card dataset" author="moksem">
+        <insert tableName="card">
+            <column name="card_number" value="4444444444444444"/>
+            <column name="user_id" value="1"/>
+            <column name="balance" value="27.54"/>
+            <column name="status_id" value="ACTIVE"/>
         </insert>
         <rollback>
-            DELETE FROM role;
+            DELETE FROM card;
         </rollback>
     </changeSet>
 </databaseChangeLog>

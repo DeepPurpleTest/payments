@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: card-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: card
+
+      changes:
+        - createTable:
+            tableName: card
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: card_number
+                  type: varchar(16)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+              - column:
+                  name: balance
+                  type: decimal(10,2)
+                  defaultValue: '0.0'
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    foreignKeyName: card_user_fk
+                    referencedTableName: user
+                    referencedColumnNames: id
+                    nullable: false
+
+              - column:
+                  name: status_id
+                  type: varchar(20)
+                  defaultValue: ACTIVE
+                  constraints:
+                    foreignKeyName: card_status_fk
+                    referencedTableName: status
+                    referencedColumnNames: id
+                    nullable: false
+

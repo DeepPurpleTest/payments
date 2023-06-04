@@ -6,6 +6,7 @@ spring:
   liquibase:
     enabled: true
     change-log: db/changelog/changelog.yaml
+    clear-checksums: true
 
   datasource:
     username: root
@@ -37,6 +38,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+    clear-checksums: true
 
 logging:
   level:
