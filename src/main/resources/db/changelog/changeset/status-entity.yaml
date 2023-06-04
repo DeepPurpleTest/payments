@@ -1,16 +1,16 @@
 databaseChangeLog:
   - changeSet:
-      id: role-entity
+      id: status-entity
       author: moksem
       preConditions:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: role
+                tableName: status
 
       changes:
         - createTable:
-            tableName: role
+            tableName: status
             columns:
               - column:
                   name: id
