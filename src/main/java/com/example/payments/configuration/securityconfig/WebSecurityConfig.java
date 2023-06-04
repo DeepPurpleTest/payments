@@ -25,6 +25,7 @@ public class WebSecurityConfig {
                         "/swagger-resources/**", "/webjars/**").permitAll()
                 .requestMatchers("/auth/account").authenticated()
                 .requestMatchers("/user/**").authenticated()
+                .requestMatchers("/card/**").authenticated()
                 .and()
                 .logout()
                 .logoutUrl("/logout")

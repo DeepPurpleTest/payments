@@ -9,7 +9,7 @@
             <column name="name" value="PlushTush"/>
             <column name="surname" value="PlushTushqweqweqwe" />
             <column name="middle_name" value="qweqweqwe"/>
-            <column name="password" value="password"/>
+            <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
             <column name="phone_number" value="+380960150636"/>
         </insert>
         <rollback>
