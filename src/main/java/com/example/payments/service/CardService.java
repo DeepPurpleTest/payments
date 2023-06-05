@@ -23,7 +23,7 @@ public class CardService {
 
     public Card createCard(User user, CardType type) {
         Card cardToCreate = Card.builder()
-                .cardNumber(CardNumberBuilder.generateCardNumber(type))
+                .cardNumber(CardNumberBuilder.generateCardNumber(type.getPrefix()))
                 .user(user)
                 .balance(BigDecimal.valueOf(0.0))
                 .status(Status.ACTIVE)

@@ -1,7 +1,5 @@
 package com.example.payments.util;
 
-import com.example.payments.entity.CardType;
-
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -19,10 +17,10 @@ public class CardNumberBuilder {
     // 8 + 4 + 1 4 + 1 6 + 6 + 4 + 1 8 + 1 6 = 50
     // 6 + 4 + 4 + 2 + 3 + 4 + 0 + 0 = 23
 
-    public static String generateCardNumber(CardType type) {
+    public static String generateCardNumber(String type) {
         StringBuilder builder = new StringBuilder();
-        builder.append(type.getPrefix());
-        int size = 16 - (type.getPrefix().length() + 1);
+        builder.append(type);
+        int size = 16 - (type.length() + 1);
         IntStream.range(0, size).forEach(string -> builder.append(random.nextInt(10)));
         builder.append(getCheckSum(builder.toString()));
 
