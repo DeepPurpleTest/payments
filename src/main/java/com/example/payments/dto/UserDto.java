@@ -1,17 +1,15 @@
 package com.example.payments.dto;
 
 import com.example.payments.util.ApplicationConstants.Validation;
-import jakarta.annotation.Nullable;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
 @Builder
 @Jacksonized
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserDto {
     @Nullable
     private Long id;
@@ -28,5 +26,10 @@ public class UserDto {
             max = Validation.MAX_MIDDLE_NAME_LENGTH,
             message = Validation.MIDDLE_NAME_MESSAGE)
     private String middleName;
+    @Nullable
+    @Length() // todo complete length
     private String phoneNumber;
+    @Nullable
+    @Length() // todo complete length
+    private String password;
 }
