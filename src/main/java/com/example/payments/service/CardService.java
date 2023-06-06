@@ -9,18 +9,29 @@ import com.example.payments.repository.CardRepository;
 import com.example.payments.util.CardNumberBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CardService {
     private final CardRepository cardRepository;
-    public List<CardDto> findAllCards(User user) {
-        return cardRepository.findAllByUser(user, CardDto.class);
+    @Transactional(readOnly = true)
+    public List<CardDto> findAll(User user) {
+        return cardRepository.findByUserId(user.getId(), CardDto.class);
     }
 
+    @Transactional(readOnly = true)
+    public CardDto find(Long id) {
+        Optional<CardDto> byId = cardRepository.findById(id, CardDto.class);
+        // Todo exception
+        return byId.orElse(null);
+    }
+
+    @Transactional
     public Card createCard(User user, CardType type) {
         Card cardToCreate = Card.builder()
                 .cardNumber(CardNumberBuilder.generateCardNumber(type.getPrefix()))
@@ -30,5 +41,25 @@ public class CardService {
                 .build();
 
         return cardRepository.save(cardToCreate);
+    }
+
+    @Transactional
+    public Card delete(User user, Long id) {
+        Optional<Card> byId = cardRepository.findById(id);
+        if(byId.isEmpty()) {
+            return null;
+        }
+
+        Card card = byId.get();
+        if(card.getUser().equals(user)) {
+            if(card.getBalance().compareTo(BigDecimal.valueOf(0.0)) > 0) {
+                cardRepository.delete(card);
+            } else {
+                return null; // Todo exception
+            }
+        } else {
+            return null; // Todo exception
+        }
+        return card;
     }
 }

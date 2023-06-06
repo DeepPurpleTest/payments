@@ -1,12 +1,13 @@
 package com.example.payments.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
@@ -36,7 +37,7 @@ public class User implements Serializable {
     @Column(name = "status_id")
     @Enumerated(EnumType.STRING)
     private Status status;
-    @JsonBackReference
-    @OneToMany
-    private List<Card> cards;
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "user")
+//    private List<Card> cards;
 }

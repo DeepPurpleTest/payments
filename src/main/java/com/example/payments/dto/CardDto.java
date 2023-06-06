@@ -1,23 +1,21 @@
 package com.example.payments.dto;
 
 import com.example.payments.entity.Status;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import jakarta.annotation.Nullable;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
 
 @Getter
-@Setter
 @Builder
 @Jacksonized
-@AllArgsConstructor
-@NoArgsConstructor
 public class CardDto {
-    @NotNull
+    @Nullable
     private String cardNumber;
-    @NotNull
+    @Nullable
     private BigDecimal balance;
-    @NotNull
+    @Nullable
     private Status status;
 }

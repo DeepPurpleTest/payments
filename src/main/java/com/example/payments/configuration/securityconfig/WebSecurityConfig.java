@@ -24,8 +24,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**").permitAll()
                 .requestMatchers("/auth/account").authenticated()
-                .requestMatchers("/user/**").authenticated()
-                .requestMatchers("/card/**").authenticated()
+                .requestMatchers("/users/**").authenticated()
+                .requestMatchers("/cards/**").authenticated()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
