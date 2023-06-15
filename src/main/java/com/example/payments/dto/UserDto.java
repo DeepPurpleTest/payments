@@ -29,7 +29,4 @@ public class UserDto {
     @Nullable
     @Length() // todo complete length
     private String phoneNumber;
-    @Nullable
-    @Length() // todo complete length
-    private String password;
 }

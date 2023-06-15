@@ -1,17 +1,19 @@
 package com.example.payments.controller.handler;
 
-import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.response.IllegaleStateResponse;
+import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ValidationExceptionHandler {
-    @ExceptionHandler
-    public ResponseEntity<IllegaleStateResponse> handle(EntityValidationException ex) {
+public class AccessExceptionHandler {
+    @ExceptionHandler // method for handle and what he handle in arguments
+    public ResponseEntity<IllegaleStateResponse> handleException(AccessException ex) {
         IllegaleStateResponse response = new IllegaleStateResponse(ex.getMessage(), System.currentTimeMillis());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        // return message with status of UNAUTHORIZED - 401
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
+
 }

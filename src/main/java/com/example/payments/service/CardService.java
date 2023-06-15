@@ -7,6 +7,8 @@ import com.example.payments.entity.Status;
 import com.example.payments.entity.User;
 import com.example.payments.repository.CardRepository;
 import com.example.payments.util.CardNumberBuilder;
+import com.example.payments.util.exception.EntityNotFoundException;
+import com.example.payments.util.exception.TransactionIsNotPossibleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +29,7 @@ public class CardService {
     @Transactional(readOnly = true)
     public CardDto find(Long id) {
         Optional<CardDto> byId = cardRepository.findById(id, CardDto.class);
-        // Todo exception
-        return byId.orElse(null);
+        return byId.orElseThrow(() -> new EntityNotFoundException("Card is not found"));
     }
 
     @Transactional
@@ -55,10 +56,10 @@ public class CardService {
             if(card.getBalance().compareTo(BigDecimal.valueOf(0.0)) > 0) {
                 cardRepository.delete(card);
             } else {
-                return null; // Todo exception
+                throw new TransactionIsNotPossibleException("Not enough money on balance");
             }
         } else {
-            return null; // Todo exception
+            throw new EntityNotFoundException("Card is not found");
         }
         return card;
     }
