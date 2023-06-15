@@ -6,6 +6,7 @@ import com.example.payments.dto.RegistrationDto;
 import com.example.payments.dto.UserDto;
 import com.example.payments.entity.User;
 import com.example.payments.service.UserService;
+import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,28 +29,32 @@ public class UserAuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public void authenticate(@RequestBody @Valid AuthCredentialsDto credentialsDto, BindingResult bindingResult,
-                             HttpServletRequest request) {
-        if(bindingResult.hasErrors()) {
+    public UserDto authenticate(@RequestBody @Valid AuthCredentialsDto credentialsDto, BindingResult bindingResult,
+                                HttpServletRequest request) throws ServletException {
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Invalid login or password");
         }
 
-        String phoneNumber = credentialsDto.getPhoneNumber();
-        String password = credentialsDto.getPassword();
+        request.login(credentialsDto.getPhoneNumber(), credentialsDto.getPassword());
 
-        try {
-            request.login(phoneNumber, password);
-        } catch (ServletException e) {
-            throw new RuntimeException(e); // todo exception
-        }
+        Authentication auth = (Authentication) request.getUserPrincipal();
+        PersonDetails user = (PersonDetails) auth.getPrincipal();
+        User authUser = user.getUser();
+        return userMapper.toDto(authUser);
     }
 
-    @PostMapping("register")
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public void logout(HttpServletRequest request) throws ServletException {
+        request.logout();
+    }
+
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public RegistrationDto register(@RequestBody @Valid RegistrationDto registrationDto,
-                                       BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return null; // todo exception
+                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new EntityValidationException("Incorrect data for registration");
         }
         User userToCreate = registrationMapper.toEntity(registrationDto);
         User createdUser = userService.create(userToCreate);
