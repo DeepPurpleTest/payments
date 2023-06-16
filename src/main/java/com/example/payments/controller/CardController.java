@@ -2,12 +2,16 @@ package com.example.payments.controller;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
+import com.example.payments.dto.TransactionDto;
 import com.example.payments.entity.Card;
 import com.example.payments.entity.CardType;
 import com.example.payments.service.CardService;
 import com.example.payments.util.mapper.GenericMapper;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,5 +46,14 @@ public class CardController {
                           @PathVariable("id") Long id) {
         Card card = cardService.delete(personDetails.getUser(), id);
         return mapper.toDto(card);
+    }
+
+    @PatchMapping("/transaction")
+    public List<CardDto> createTransaction(@RequestBody @Valid TransactionDto dto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            throw new ValidationException("Cannot create transaction");
+        }
+
+        return cardService.update(dto).stream().map(mapper::toDto).toList();
     }
 }
