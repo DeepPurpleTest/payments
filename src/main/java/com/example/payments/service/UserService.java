@@ -60,4 +60,15 @@ public class UserService {
         userToCreate.setPassword(bCryptPass);
         return userRepository.save(userToCreate);
     }
+
+    @Transactional
+    public User delete(Long id) {
+        Optional<User> byId = userRepository.findById(id);
+        if(byId.isEmpty()) {
+            throw new EntityNotFoundException(String.format("User with id %s is not found", id));
+        }
+        User userToDelete = byId.get();
+        userRepository.delete(userToDelete);
+        return userToDelete;
+    }
 }
