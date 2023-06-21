@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: request-status-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: request_status
+
+      changes:
+        - createTable:
+            tableName: request_status
+            columns:
+              - column:
+                  name: id
+                  type: varchar(20)
+                  constraints:
+                    primaryKey: true

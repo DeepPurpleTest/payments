@@ -1,16 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: card-entity
+      id: request-entity
       author: moksem
       preConditions:
         - onFail: MARK_RAN
         - not:
-            - tableExists:
-                tableName: card
-
+            tableExists:
+              tableName: request
       changes:
         - createTable:
-            tableName: card
+            tableName: request
             columns:
               - column:
                   name: id
@@ -21,34 +20,37 @@ databaseChangeLog:
 
               - column:
                   name: card_number
-                  type: varchar(16)
+                  type: varchar(20)
                   constraints:
-                    unique: true
+                    foreignKeyName: request_card_fk
+                    referencedTableName: card
+                    referencedColumnNames: card_number
                     nullable: false
 
               - column:
-                  name: balance
-                  type: decimal(10,2)
-                  defaultValue: '0.0'
+                  name: status
+                  type: varchar(20)
                   constraints:
+                    foreignKeyName: request_status_fk
+                    referencedTableName: request_status
+                    referencedColumnNames: id
                     nullable: false
 
               - column:
                   name: user_id
                   type: int
                   constraints:
-                    foreignKeyName: card_user_fk
+                    foreignKeyName: request_user_fk
                     referencedTableName: user
                     referencedColumnNames: id
                     nullable: false
 
               - column:
-                  name: status_id
-                  type: varchar(20)
-                  defaultValue: ACTIVE
+                  name: admin_id
+                  type: int
                   constraints:
-                    foreignKeyName: card_status_fk
-                    referencedTableName: status
+                    foreignKeyName: request_admin_fk
+                    referencedTableName: admin
                     referencedColumnNames: id
-                    nullable: false
+                    nullable: true
 
