@@ -48,7 +48,7 @@ databaseChangeLog:
                   type: varchar(20)
                   constraints:
                     foreignKeyName: payment_transaction_fk
-                    referencedTableName: transaction_status
+                    referencedTableName: payment_status
                     referencedColumnNames: id
                     nullable: false
 

@@ -10,6 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "card")
@@ -34,4 +35,7 @@ public class Card implements Serializable {
     @Column(name = "status_id")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToMany
+    List<Payment> payments;
 }

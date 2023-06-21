@@ -23,7 +23,7 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @GetMapping()
+    @GetMapping()// todo get methods cannot send body
     public UserDto findByPhoneNumber(@RequestBody @Valid UserDto userDto,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

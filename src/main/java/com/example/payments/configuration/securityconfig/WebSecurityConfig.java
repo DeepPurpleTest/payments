@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/auth/logout").authenticated()
                 .requestMatchers("/users/**").authenticated()
                 .requestMatchers("/cards/**").authenticated()
+                .requestMatchers("/payments/**").authenticated()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/auth/login")

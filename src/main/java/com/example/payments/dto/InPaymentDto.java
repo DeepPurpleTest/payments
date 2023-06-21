@@ -11,13 +11,11 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 @Jacksonized
-public class TransactionDto {
+public class InPaymentDto {
     @NotNull
-    @Min(1)
-    Long senderId;
+    String sender;
     @NotNull
-    @Min(1)
-    Long receiverId;
+    String receiver;
     @NotNull
     @Min(5)
     BigDecimal amount;

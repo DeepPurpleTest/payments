@@ -5,7 +5,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/status-entity.yaml
   - include:
-      file: db/changelog/changeset/transaction-status-entity.yaml
+      file: db/changelog/changeset/payment-status-entity.yaml
   - include:
       file: db/changelog/changeset/request-status-entity.yaml
   - include:
@@ -25,7 +25,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/dataset/status-dataset.xml
   - include:
-      file: db/changelog/dataset/transaction-status-dataset.xml
+      file: db/changelog/dataset/payment-status-dataset.xml
   - include:
       file: db/changelog/dataset/request-status-dataset.xml
   - include:
