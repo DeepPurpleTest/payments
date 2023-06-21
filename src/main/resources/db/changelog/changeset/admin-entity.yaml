@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: admin-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: admin
+
+      changes:
+        - createTable:
+            tableName: admin
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+
+              - column:
+                  name: login
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: password
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: role
+                  type: varchar(20)
+                  defaultValue: ADMIN
+                  constraints:
+                    foreignKeyName: admin_role_fk
+                    referencedTableName: role
+                    referencedColumnNames: id
+                    nullable: false

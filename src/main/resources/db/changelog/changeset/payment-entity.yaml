@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: payment-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: payment
+      changes:
+        - createTable:
+            tableName: payment
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: card_sender
+                  type: varchar(20)
+                  constraints:
+                    foreignKeyName: card_sender_fk
+                    referencedTableName: card
+                    referencedColumnNames: card_number
+                    nullable: false
+
+              - column:
+                  name: card_receiver
+                  type: varchar(20)
+                  constraints:
+                    foreignKeyName: card_receiver_fk
+                    referencedTableName: card
+                    referencedColumnNames: card_number
+                    nullable: false
+
+              - column:
+                  name: amount
+                  type: decimal(10, 2)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    foreignKeyName: payment_transaction_fk
+                    referencedTableName: transaction_status
+                    referencedColumnNames: id
+                    nullable: false
+
+              - column:
+                  name: date
+                  type: timestamp
+                  constraints:
+                    nullable: false
