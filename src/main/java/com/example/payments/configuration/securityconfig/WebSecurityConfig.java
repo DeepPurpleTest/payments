@@ -22,7 +22,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/auth/_login").permitAll()
+                .requestMatchers("/auth/register").permitAll()
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**").permitAll()
                 .requestMatchers("/auth/account").authenticated()
@@ -32,7 +33,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/payments/**").authenticated()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/auth/login")
+                .logoutSuccessUrl("/auth/_login")
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));

@@ -1,20 +1,19 @@
 package com.example.payments.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
+@Getter
+@Setter
 @Entity
-@Table(name = "payment")
-@Data
 @Builder
 @Jacksonized
+@Table(name = "payment")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Payment {
@@ -24,10 +23,10 @@ public class Payment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "card_sender", referencedColumnName = "card_number")
+    @JoinColumn(name = "sender", referencedColumnName = "card_number")
     private Card sender;
     @ManyToOne
-    @JoinColumn(name = "card_receiver", referencedColumnName = "card_number")
+    @JoinColumn(name = "receiver", referencedColumnName = "card_number")
     private Card receiver;
     @Column(name = "amount")
     private BigDecimal amount;

@@ -28,7 +28,18 @@ public class CardService {
     }
 
     @Transactional(readOnly = true)
-    public CardDto find(Card card) {
+    public List<CardDto> findAll(Long id) {
+        return cardRepository.findByUserId(id, CardDto.class);
+    }
+
+    @Transactional(readOnly = true)
+    public CardDto findById(Long id) {
+        Optional<CardDto> byId = cardRepository.findById(id, CardDto.class);
+        return byId.orElseThrow(() -> new EntityNotFoundException("Card is not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public CardDto findByPhoneNumber(Card card) {
         Optional<CardDto> byId = cardRepository.findByCardNumber(card.getCardNumber(), CardDto.class);
         return byId.orElseThrow(() -> new EntityNotFoundException("Card is not found"));
     }

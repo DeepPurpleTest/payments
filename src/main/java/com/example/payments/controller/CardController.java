@@ -20,13 +20,23 @@ public class CardController {
     private final GenericMapper<Card, CardDto> mapper;
     private final CardService cardService;
     @GetMapping
-    public List<CardDto> findAll(@AuthenticationPrincipal PersonDetails personDetails) {
+    public List<CardDto> findAllByCurrentUser(@AuthenticationPrincipal PersonDetails personDetails) {
         return cardService.findAll(personDetails.getUser());
     }
 
-    @GetMapping("/find")
-    public CardDto findOne(@RequestBody @Valid CardDto dto) {
-        return cardService.find(mapper.toEntity(dto));
+    @GetMapping("/user/{id}")
+    public List<CardDto> findAllByUserId(@PathVariable("id") Long id) {
+        return cardService.findAll(id);
+    }
+
+    @GetMapping("/{id}")
+    public CardDto findById(@PathVariable("id") Long id) {
+        return cardService.findById(id);
+    }
+
+    @GetMapping("/phone_number")
+    public CardDto findByPhoneNumber(@RequestBody @Valid CardDto cardDto) {
+        return cardService.findByPhoneNumber(mapper.toEntity(cardDto));
     }
 
     @PostMapping("/create")

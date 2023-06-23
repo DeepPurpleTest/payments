@@ -1,5 +1,6 @@
 package com.example.payments.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,11 @@ public class Card implements Serializable {
     @Column(name = "status_id")
     @Enumerated(EnumType.STRING)
     private Status status;
+    @JsonBackReference
+    @OneToMany(mappedBy = "sender")
+    private List<Payment> likeSenderPayments;
 
-    @OneToMany
-    List<Payment> payments;
+    @JsonBackReference
+    @OneToMany(mappedBy = "receiver")
+    private List<Payment> likeReceiverPayments;
 }

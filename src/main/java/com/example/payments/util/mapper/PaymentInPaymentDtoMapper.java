@@ -4,6 +4,6 @@ import com.example.payments.dto.InPaymentDto;
 import com.example.payments.entity.Payment;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel="spring", uses = CardMapper.class)
-public interface InPaymentMapper extends GenericMapper<Payment, InPaymentDto> {
+@Mapper(componentModel="spring", uses = CardDtoMapper.class)
+public interface PaymentInPaymentDtoMapper extends GenericMapper<Payment, InPaymentDto> {
 }

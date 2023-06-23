@@ -5,7 +5,7 @@ import com.example.payments.entity.Card;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel="spring")
-public interface CardMapper extends GenericMapper<Card, CardDto> {
+public interface CardDtoMapper extends GenericMapper<Card, CardDto> {
     default String cardToString(Card card) {
         return card.getCardNumber();
     }

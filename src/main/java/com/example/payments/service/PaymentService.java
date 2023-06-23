@@ -1,14 +1,15 @@
 package com.example.payments.service;
 
-import com.example.payments.dto.OutPaymentDto;
-import com.example.payments.entity.Card;
-import com.example.payments.entity.Payment;
-import com.example.payments.entity.PaymentStatus;
-import com.example.payments.entity.Status;
+import com.example.payments.dto.OutReceiverPaymentDto;
+import com.example.payments.dto.OutSenderPaymentDto;
+import com.example.payments.entity.*;
 import com.example.payments.repository.CardRepository;
 import com.example.payments.repository.PaymentRepository;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionIsNotPossibleException;
+import com.example.payments.util.mapper.ViewToDtoMapper;
+import com.example.payments.view.AbstractOutPaymentIdentifiable;
+import com.example.payments.view.OutSenderReceiverPaymentView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +24,37 @@ import java.util.Optional;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final CardRepository cardRepository;
+    private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutReceiverPaymentDto> viewReceiverMapper;
+    private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutSenderPaymentDto> viewSenderMapper;
 
-    public List<OutPaymentDto> findByCardNumber(Card card) {
+
+    @Transactional(readOnly = true)
+    public List<AbstractOutPaymentIdentifiable> findByCurrentUser(User user) {
+        List<? extends AbstractOutPaymentIdentifiable> payments = paymentRepository
+                .findAllByUserId(user.getId(), OutSenderReceiverPaymentView.class);
+
+        return outPaymentViewConvertor(payments, user);
+    }
+
+    private List<AbstractOutPaymentIdentifiable> outPaymentViewConvertor(List<? extends AbstractOutPaymentIdentifiable> payments, User user) {
+        return payments.stream().map(payment -> {
+            OutSenderReceiverPaymentView view = (OutSenderReceiverPaymentView) payment;
+            String senderNumber = view.getSender().getUser().getPhoneNumber();
+            if (senderNumber.equals(user.getPhoneNumber())) {
+                return viewSenderMapper.toDto(view);
+            }
+            return viewReceiverMapper.toDto(view);
+        }).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<OutSenderPaymentDto> findByCardNumber(Card card) {
         Optional<Card> byId = cardRepository.findByCardNumber(card.getCardNumber(), Card.class);
         if(byId.isEmpty()) {
             throw new EntityNotFoundException(String.format("Card with number %s is not found", card.getCardNumber()));
         }
 
-        return paymentRepository.findBySenderOrReceiver(card, card, OutPaymentDto.class);
+        return paymentRepository.findBySenderOrReceiver(card, card, OutSenderPaymentDto.class);
     }
 
     @Transactional
