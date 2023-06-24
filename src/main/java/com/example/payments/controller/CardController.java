@@ -2,16 +2,13 @@ package com.example.payments.controller;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
-import com.example.payments.dto.TransactionDto;
 import com.example.payments.entity.Card;
 import com.example.payments.entity.CardType;
 import com.example.payments.service.CardService;
 import com.example.payments.util.mapper.GenericMapper;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,16 +20,23 @@ public class CardController {
     private final GenericMapper<Card, CardDto> mapper;
     private final CardService cardService;
     @GetMapping
-    public List<CardDto> findAll(@AuthenticationPrincipal PersonDetails personDetails) {
-        System.out.println(personDetails.getUser().getId());
-        System.out.println(personDetails.getUser().getPhoneNumber());
-        System.out.println(personDetails.getUser().getName());
+    public List<CardDto> findAllByCurrentUser(@AuthenticationPrincipal PersonDetails personDetails) {
         return cardService.findAll(personDetails.getUser());
     }
 
+    @GetMapping("/user/{id}")
+    public List<CardDto> findAllByUserId(@PathVariable("id") Long id) {
+        return cardService.findAll(id);
+    }
+
     @GetMapping("/{id}")
-    public CardDto findOne(@PathVariable("id") Long id) {
-        return cardService.find(id);
+    public CardDto findById(@PathVariable("id") Long id) {
+        return cardService.findById(id);
+    }
+
+    @GetMapping("/phone_number")
+    public CardDto findByPhoneNumber(@RequestBody @Valid CardDto cardDto) {
+        return cardService.findByPhoneNumber(mapper.toEntity(cardDto));
     }
 
     @PostMapping("/create")
@@ -41,19 +45,10 @@ public class CardController {
         return mapper.toDto(createdCard);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public CardDto delete(@AuthenticationPrincipal PersonDetails personDetails,
-                          @PathVariable("id") Long id) {
-        Card card = cardService.delete(personDetails.getUser(), id);
+                          @RequestBody @Valid CardDto dto) {
+        Card card = cardService.delete(personDetails.getUser(), mapper.toEntity(dto));
         return mapper.toDto(card);
-    }
-
-    @PatchMapping("/transaction")
-    public List<CardDto> createTransaction(@RequestBody @Valid TransactionDto dto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            throw new ValidationException("Cannot create transaction");
-        }
-
-        return cardService.update(dto).stream().map(mapper::toDto).toList();
     }
 }

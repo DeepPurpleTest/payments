@@ -27,7 +27,7 @@ public class UserAuthController {
     private final GenericMapper<User, UserDto> userMapper;
     private final UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping("/_login")
     @ResponseStatus(HttpStatus.OK)
     public UserDto authenticate(@RequestBody @Valid AuthCredentialsDto credentialsDto, BindingResult bindingResult,
                                 HttpServletRequest request) throws ServletException {
@@ -52,12 +52,14 @@ public class UserAuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public RegistrationDto register(@RequestBody @Valid RegistrationDto registrationDto,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult,
+                                    HttpServletRequest request) throws ServletException {
         if (bindingResult.hasErrors()) {
             throw new EntityValidationException("Incorrect data for registration");
         }
         User userToCreate = registrationMapper.toEntity(registrationDto);
         User createdUser = userService.create(userToCreate);
+        request.login(createdUser.getPhoneNumber(), createdUser.getPassword());
         return registrationMapper.toDto(createdUser);
     }
 

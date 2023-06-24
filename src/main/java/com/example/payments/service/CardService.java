@@ -1,7 +1,6 @@
 package com.example.payments.service;
 
 import com.example.payments.dto.CardDto;
-import com.example.payments.dto.TransactionDto;
 import com.example.payments.entity.Card;
 import com.example.payments.entity.CardType;
 import com.example.payments.entity.Status;
@@ -29,8 +28,19 @@ public class CardService {
     }
 
     @Transactional(readOnly = true)
-    public CardDto find(Long id) {
+    public List<CardDto> findAll(Long id) {
+        return cardRepository.findByUserId(id, CardDto.class);
+    }
+
+    @Transactional(readOnly = true)
+    public CardDto findById(Long id) {
         Optional<CardDto> byId = cardRepository.findById(id, CardDto.class);
+        return byId.orElseThrow(() -> new EntityNotFoundException("Card is not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public CardDto findByPhoneNumber(Card card) {
+        Optional<CardDto> byId = cardRepository.findByCardNumber(card.getCardNumber(), CardDto.class);
         return byId.orElseThrow(() -> new EntityNotFoundException("Card is not found"));
     }
 
@@ -47,13 +57,13 @@ public class CardService {
     }
 
     @Transactional
-    public Card delete(User user, Long id) {
-        Optional<Card> byId = cardRepository.findById(id);
-        if (byId.isEmpty()) {
+    public Card delete(User user, Card cardToFind) {
+        Optional<Card> byCardNumber = cardRepository.findByCardNumber(cardToFind.getCardNumber(), Card.class);
+        if (byCardNumber.isEmpty()) {
             return null;
         }
 
-        Card card = byId.get();
+        Card card = byCardNumber.get();
         if (card.getUser().equals(user)) {
             if (card.getBalance().compareTo(BigDecimal.valueOf(0.0)) > 0) {
                 cardRepository.delete(card);
@@ -64,39 +74,5 @@ public class CardService {
             throw new EntityNotFoundException("Card is not found");
         }
         return card;
-    }
-
-    @Transactional
-    public List<Card> update(TransactionDto dto) {
-        Optional<Card> senderById = cardRepository.findById(dto.getSenderId());
-        Optional<Card> receiverById = cardRepository.findById(dto.getReceiverId());
-
-        if (senderById.isEmpty()) {
-            throw new EntityNotFoundException(String.format("Card with id %d is not found", dto.getSenderId()));
-        }
-        if (receiverById.isEmpty()) {
-            throw new EntityNotFoundException(String.format("Card with id %d is not found", dto.getReceiverId()));
-        }
-
-        Card cardSender = senderById.get();
-        Card cardReceiver = receiverById.get();
-
-        validateTransaction(cardSender, cardReceiver, dto.getAmount());
-
-        cardSender.setBalance(cardSender.getBalance().subtract(dto.getAmount()));
-        cardReceiver.setBalance(cardReceiver.getBalance().add(dto.getAmount()));
-        return List.of(cardSender, cardReceiver);
-    }
-
-    private void validateTransaction(Card cardSender, Card cardReceiver, BigDecimal amount) {
-        if (cardSender.getStatus().equals(Status.BLOCKED)) {
-            throw new TransactionIsNotPossibleException(String.format("Card with number %s is blocked", cardSender.getCardNumber()));
-        }
-        if (cardReceiver.getStatus().equals(Status.BLOCKED)) {
-            throw new TransactionIsNotPossibleException(String.format("Card with number %s is blocked", cardReceiver.getCardNumber()));
-        }
-        if((cardSender.getBalance().compareTo(amount)) < 0) {
-            throw new TransactionIsNotPossibleException("Sender has not enough money for transaction");
-        }
     }
 }

@@ -20,7 +20,7 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: card_sender
+                  name: sender
                   type: varchar(20)
                   constraints:
                     foreignKeyName: card_sender_fk
@@ -29,7 +29,7 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: card_receiver
+                  name: receiver
                   type: varchar(20)
                   constraints:
                     foreignKeyName: card_receiver_fk
@@ -48,7 +48,7 @@ databaseChangeLog:
                   type: varchar(20)
                   constraints:
                     foreignKeyName: payment_transaction_fk
-                    referencedTableName: transaction_status
+                    referencedTableName: payment_status
                     referencedColumnNames: id
                     nullable: false
 

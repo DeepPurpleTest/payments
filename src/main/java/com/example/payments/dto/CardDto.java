@@ -1,10 +1,11 @@
 package com.example.payments.dto;
 
 import com.example.payments.entity.Status;
-import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
+import org.springframework.lang.Nullable;
 
 import java.math.BigDecimal;
 
@@ -13,9 +14,12 @@ import java.math.BigDecimal;
 @Jacksonized
 public class CardDto {
     @Nullable
-    private String cardNumber;
+    Long id;
+    @NotNull
+    String cardNumber;
     @Nullable
-    private BigDecimal balance;
+    BigDecimal balance;
     @Nullable
-    private Status status;
+    Status status;
+
 }

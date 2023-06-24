@@ -6,10 +6,10 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - not:
             - tableExists:
-                tableName: transaction_status
+                tableName: payment_status
       changes:
         - createTable:
-            tableName: transaction_status
+            tableName: payment_status
             columns:
               - column:
                   name: id
