@@ -33,15 +33,18 @@ public class PaymentController {
     }
 
     @PostMapping("/_findAll")
-    public List<OutSenderPaymentDto> findAllByCardNumber(@RequestBody @Valid CardDto dto, BindingResult bindingResult) {
+    public List<AbstractOutPaymentIdentifiable> findAllByCardNumber(@RequestBody @Valid CardDto dto,
+                                                                    BindingResult bindingResult,
+                                                                    @AuthenticationPrincipal PersonDetails personDetails) {
         if(bindingResult.hasErrors()) {
             throw new ValidationException("Card validation error"); //todo how to do better?
         }
 
-        return paymentService.findByCardNumber(cardMapper.toEntity(dto));
+        return paymentService.findByCardNumber(cardMapper.toEntity(dto), personDetails.getUser());
     }
     @PostMapping("/create")
-    public OutSenderPaymentDto createTransaction(@RequestBody @Valid InPaymentDto dto, BindingResult bindingResult) {
+    public OutSenderPaymentDto createTransaction(@RequestBody @Valid InPaymentDto dto,
+                                                 BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new ValidationException("Cannot create transaction");
         }

@@ -27,10 +27,9 @@ public class PaymentService {
     private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutReceiverPaymentDto> viewReceiverMapper;
     private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutSenderPaymentDto> viewSenderMapper;
 
-
     @Transactional(readOnly = true)
     public List<AbstractOutPaymentIdentifiable> findByCurrentUser(User user) {
-        List<? extends AbstractOutPaymentIdentifiable> payments = paymentRepository
+        List<OutSenderReceiverPaymentView> payments = paymentRepository
                 .findAllByUserId(user.getId(), OutSenderReceiverPaymentView.class);
 
         return outPaymentViewConvertor(payments, user);
@@ -48,13 +47,14 @@ public class PaymentService {
     }
 
     @Transactional(readOnly = true)
-    public List<OutSenderPaymentDto> findByCardNumber(Card card) {
+    public List<AbstractOutPaymentIdentifiable> findByCardNumber(Card card, User user) {
         Optional<Card> byId = cardRepository.findByCardNumber(card.getCardNumber(), Card.class);
         if(byId.isEmpty()) {
             throw new EntityNotFoundException(String.format("Card with number %s is not found", card.getCardNumber()));
         }
-
-        return paymentRepository.findBySenderOrReceiver(card, card, OutSenderPaymentDto.class);
+        List<OutSenderReceiverPaymentView> payments = paymentRepository
+                .findBySenderOrReceiver(card, card, OutSenderReceiverPaymentView.class);
+        return outPaymentViewConvertor(payments, user);
     }
 
     @Transactional
