@@ -1,5 +1,6 @@
 package com.example.payments.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
@@ -21,10 +22,11 @@ public class Payment {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "sender", referencedColumnName = "card_number")
     private Card sender;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "receiver", referencedColumnName = "card_number")
     private Card receiver;

@@ -43,4 +43,8 @@ public class Card implements Serializable {
     @JsonBackReference
     @OneToMany(mappedBy = "receiver")
     private List<Payment> likeReceiverPayments;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "card")
+    private List<Request> requests;
 }
