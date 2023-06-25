@@ -8,7 +8,7 @@ import com.example.payments.repository.PaymentRepository;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionIsNotPossibleException;
 import com.example.payments.util.mapper.ViewToDtoMapper;
-import com.example.payments.view.AbstractOutPaymentIdentifiable;
+import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 import com.example.payments.view.OutSenderReceiverPaymentView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

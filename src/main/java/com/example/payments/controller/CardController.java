@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("/card")
 @RequiredArgsConstructor
 public class CardController {
     private final GenericMapper<Card, CardDto> mapper;
@@ -36,7 +36,7 @@ public class CardController {
 
     @GetMapping("/phone_number")
     public CardDto findByPhoneNumber(@RequestBody @Valid CardDto cardDto) {
-        return cardService.findByPhoneNumber(mapper.toEntity(cardDto));
+        return cardService.findByCardNumber(mapper.toEntity(cardDto));
     }
 
     @PostMapping("/create")

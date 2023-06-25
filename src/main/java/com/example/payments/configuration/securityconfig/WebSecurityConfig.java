@@ -1,5 +1,6 @@
 package com.example.payments.configuration.securityconfig;
 
+import com.example.payments.entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,8 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+    private final String adminAuthority = Role.ADMIN.toString();
+    private final String clientAuthority = Role.CLIENT.toString();
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,11 +29,13 @@ public class WebSecurityConfig {
                 .requestMatchers("/auth/register").permitAll()
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**").permitAll()
-                .requestMatchers("/auth/account").authenticated()
-                .requestMatchers("/auth/logout").authenticated()
-                .requestMatchers("/users/**").authenticated()
-                .requestMatchers("/cards/**").authenticated()
-                .requestMatchers("/payments/**").authenticated()
+                .requestMatchers("/auth/account").hasAnyAuthority(adminAuthority, clientAuthority)
+                .requestMatchers("/auth/logout").hasAnyAuthority(adminAuthority, clientAuthority)
+                .requestMatchers("/user/**").hasAnyAuthority(adminAuthority)
+                .requestMatchers("/user/update").hasAnyAuthority(clientAuthority)
+                .requestMatchers("/card/**").authenticated()
+                .requestMatchers("/payment/**").authenticated()
+                .requestMatchers("/request/**").authenticated()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/auth/_login")

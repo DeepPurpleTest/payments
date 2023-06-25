@@ -2,13 +2,19 @@ package com.example.payments.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
-@Data
 @Entity
 @Table(name = "request")
+@Data
+@Builder
 @Jacksonized
+@AllArgsConstructor
+@NoArgsConstructor
 public class Request {
     @Id
     @Column(name = "id")

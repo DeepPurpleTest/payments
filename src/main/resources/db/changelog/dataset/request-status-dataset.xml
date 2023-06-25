@@ -11,6 +11,9 @@
         <insert tableName="request_status">
             <column name="id" value="UNTREATED"/>
         </insert>
+        <insert tableName="request_status">
+            <column name="id" value="PROCESSING"/>
+        </insert>
         <rollback>
             DELETE FROM request_status;
         </rollback>

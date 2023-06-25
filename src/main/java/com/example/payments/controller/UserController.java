@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor // RequiredArgsConstructor for args we need
 public class UserController {
-    private final GenericMapper<User, UserDto> mapper;
     private final UserService userService; // final only for @RequiredArgsConstructor
+    private final GenericMapper<User, UserDto> mapper;
 
     @GetMapping("/{id}")
     public UserDto find(@PathVariable("id") Long id) {

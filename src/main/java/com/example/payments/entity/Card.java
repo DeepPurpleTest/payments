@@ -1,5 +1,6 @@
 package com.example.payments.entity;
 
+import com.example.payments.view.identifiable.AbstractCardIdentifiable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @Jacksonized
 @AllArgsConstructor
 @NoArgsConstructor
-public class Card implements Serializable {
+public class Card implements Serializable, AbstractCardIdentifiable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

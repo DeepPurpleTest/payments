@@ -9,6 +9,7 @@ import com.example.payments.repository.CardRepository;
 import com.example.payments.util.CardNumberBuilder;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionIsNotPossibleException;
+import com.example.payments.view.identifiable.AbstractCardIdentifiable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +40,14 @@ public class CardService {
     }
 
     @Transactional(readOnly = true)
-    public CardDto findByPhoneNumber(Card card) {
+    public CardDto findByCardNumber(Card card) {
         Optional<CardDto> byId = cardRepository.findByCardNumber(card.getCardNumber(), CardDto.class);
         return byId.orElseThrow(() -> new EntityNotFoundException("Card is not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public <T extends AbstractCardIdentifiable> Optional<T> findByCardNumber(Card card, Class<T> type) {
+        return cardRepository.findByCardNumber(card.getCardNumber(), type);
     }
 
     @Transactional

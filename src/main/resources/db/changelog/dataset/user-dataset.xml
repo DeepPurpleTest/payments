@@ -12,6 +12,13 @@
             <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
             <column name="phone_number" value="+380960150636"/>
         </insert>
+        <insert tableName="user">
+            <column name="name" value="Moksem"/>
+            <column name="surname" value="Viskovatov" />
+            <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
+            <column name="phone_number" value="+380960150635"/>
+            <column name="role_id" value="ADMIN"/>
+        </insert>
         <rollback>
             DELETE FROM user;
         </rollback>

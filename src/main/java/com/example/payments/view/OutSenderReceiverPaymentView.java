@@ -1,6 +1,7 @@
 package com.example.payments.view;
 
 import com.example.payments.entity.PaymentStatus;
+import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

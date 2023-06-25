@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.Nullable;
 
 @Getter
-@Setter
 @Builder
 @Jacksonized
 public class UserDto {
