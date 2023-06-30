@@ -12,8 +12,8 @@ public class ApplicationConstants {
         public static final int MAX_SURNAME_LENGTH = 25;
         public static final int MIN_MIDDLE_NAME_LENGTH = 5;
         public static final int MAX_MIDDLE_NAME_LENGTH = 25;
-        public static final int MIN_PHONE_NUMBER_LENGTH = 12;
-        public static final int MAX_PHONE_NUMBER_LENGTH = 12;
+        public static final int MIN_PHONE_NUMBER_LENGTH = 13;
+        public static final int MAX_PHONE_NUMBER_LENGTH = 13;
 
         public static final String NAME_MESSAGE = "Invalid name format";
         public static final String SURNAME_MESSAGE = "Invalid name format";
