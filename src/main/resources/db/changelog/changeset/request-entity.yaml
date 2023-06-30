@@ -28,7 +28,7 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: status
+                  name: status_id
                   type: varchar(20)
                   constraints:
                     foreignKeyName: request_status_fk

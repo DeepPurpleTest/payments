@@ -44,5 +44,9 @@ public class User implements Serializable {
     private List<Card> cards;
     @JsonBackReference
     @OneToMany(mappedBy = "user")
-    private List<Request> requests;
+    private List<Request> sentRequests;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "admin")
+    private List<Request> processedRequests;
 }

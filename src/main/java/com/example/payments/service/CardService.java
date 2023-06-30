@@ -63,6 +63,17 @@ public class CardService {
     }
 
     @Transactional
+    public Card update(Card cardToBlock) {
+        Optional<Card> byNumber = cardRepository.findByCardNumber(cardToBlock.getCardNumber(), Card.class);
+        if(byNumber.isEmpty()) {
+            throw new EntityNotFoundException(String.format("Card with number %s is not found", cardToBlock.getCardNumber()));
+        }
+        Card card = byNumber.get();
+        card.setStatus(Status.BLOCKED);
+        return card;
+    }
+
+    @Transactional
     public Card delete(User user, Card cardToFind) {
         Optional<Card> byCardNumber = cardRepository.findByCardNumber(cardToFind.getCardNumber(), Card.class);
         if (byCardNumber.isEmpty()) {
