@@ -8,7 +8,7 @@ import com.example.payments.entity.Card;
 import com.example.payments.entity.Payment;
 import com.example.payments.service.PaymentService;
 import com.example.payments.util.mapper.GenericMapper;
-import com.example.payments.view.AbstractOutPaymentIdentifiable;
+import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/payment")
 @RequiredArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
