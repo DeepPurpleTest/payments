@@ -26,6 +26,8 @@ public class UserDto {
             message = Validation.MIDDLE_NAME_MESSAGE)
     private String middleName;
     @Nullable
-    @Length() // todo complete length
+    @Length(min = Validation.MIN_PHONE_NUMBER_LENGTH,
+            max = Validation.MAX_PHONE_NUMBER_LENGTH,
+            message = Validation.PHONE_NUMBER_MESSAGE)
     private String phoneNumber;
 }
