@@ -38,7 +38,7 @@ databaseChangeLog:
                   type: int
                   constraints:
                     foreignKeyName: card_user_fk
-                    referencedTableName: user
+                    referencedTableName: user_account
                     referencedColumnNames: id
                     nullable: false
 

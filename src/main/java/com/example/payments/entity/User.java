@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @Builder
 @Jacksonized
-@Table(name = "user")
+@Table(name = "user_account")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {

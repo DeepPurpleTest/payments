@@ -6,10 +6,10 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - not:
            - tableExists:
-              tableName: user
+              tableName: user_account
       changes:
         - createTable:
-            tableName: user
+            tableName: user_account
             columns:
               - column:
                   name: id

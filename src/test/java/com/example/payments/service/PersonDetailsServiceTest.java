@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-@ActiveProfiles("test")
+@ActiveProfiles("test-env")
 class PersonDetailsServiceTest {
     @Autowired
     private PersonDetailsService personDetailsService;

@@ -59,7 +59,7 @@ public class UserAuthController {
         }
         User userToCreate = registrationMapper.toEntity(registrationDto);
         User createdUser = userService.create(userToCreate);
-        request.login(createdUser.getPhoneNumber(), createdUser.getPassword());
+//        request.login(createdUser.getPhoneNumber(), createdUser.getPassword());
         return registrationMapper.toDto(createdUser);
     }
 
