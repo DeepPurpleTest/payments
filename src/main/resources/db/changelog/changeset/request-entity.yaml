@@ -41,7 +41,7 @@ databaseChangeLog:
                   type: int
                   constraints:
                     foreignKeyName: request_user_fk
-                    referencedTableName: user
+                    referencedTableName: user_account
                     referencedColumnNames: id
                     nullable: false
 
@@ -50,7 +50,7 @@ databaseChangeLog:
                   type: int
                   constraints:
                     foreignKeyName: request_admin_fk
-                    referencedTableName: user
+                    referencedTableName: user_account
                     referencedColumnNames: id
                     nullable: true
 

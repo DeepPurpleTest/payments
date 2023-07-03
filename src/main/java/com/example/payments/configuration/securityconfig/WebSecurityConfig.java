@@ -27,7 +27,7 @@ public class WebSecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/auth/_login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/register").anonymous()
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/auth/account").hasAnyAuthority(adminAuthority, clientAuthority)

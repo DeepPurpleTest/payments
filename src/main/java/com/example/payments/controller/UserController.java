@@ -5,6 +5,7 @@ import com.example.payments.entity.User;
 import com.example.payments.service.UserService;
 import com.example.payments.util.mapper.GenericMapper;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,6 @@ public class UserController {
 
     @GetMapping("/phone_number")
     public UserDto findByPhoneNumber(@RequestParam String phoneNumber) {
-        System.out.println(phoneNumber);
         return userService.findByPhoneNumber(phoneNumber);
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     public UserDto update(@RequestBody @Valid UserDto userDto,
                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return null;
+            throw new ValidationException();
         }
         User updatedUser = userService.update(mapper.toEntity(userDto));
         return mapper.toDto(updatedUser);

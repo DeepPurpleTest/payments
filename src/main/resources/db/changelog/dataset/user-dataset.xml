@@ -4,15 +4,15 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="user dataset" author="moksem">
-        <insert tableName="user">
+    <changeSet id="user account dataset" author="moksem">
+        <insert tableName="user_account">
             <column name="name" value="PlushTush"/>
             <column name="surname" value="PlushTushqweqweqwe" />
             <column name="middle_name" value="qweqweqwe"/>
             <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
             <column name="phone_number" value="+380960150636"/>
         </insert>
-        <insert tableName="user">
+        <insert tableName="user_account">
             <column name="name" value="Moksem"/>
             <column name="surname" value="Viskovatov" />
             <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
@@ -20,7 +20,7 @@
             <column name="role_id" value="ADMIN"/>
         </insert>
         <rollback>
-            DELETE FROM user;
+            DELETE FROM user_account;
         </rollback>
     </changeSet>
 </databaseChangeLog>
