@@ -12,8 +12,8 @@
     <groupId>com.example</groupId>
     <artifactId>payments-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>payments</name>
-    <description>payments</description>
+    <name>payments-api</name>
+    <description>payments-api</description>
     <properties>
         <java.version>17</java.version>
         <lombok.version>1.18.28</lombok.version>

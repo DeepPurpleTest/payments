@@ -17,6 +17,12 @@
             <column name="balance" value="50.02"/>
             <column name="status_id" value="ACTIVE"/>
         </insert>
+        <insert tableName="card">
+            <column name="card_number" value="4444444444444445"/>
+            <column name="user_id" value="2"/>
+            <column name="balance" value="555.77"/>
+            <column name="status_id" value="ACTIVE"/>
+        </insert>
         <rollback>
             DELETE FROM card;
         </rollback>

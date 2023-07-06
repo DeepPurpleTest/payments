@@ -24,7 +24,7 @@
 
     <modules>
         <module>payments-api</module>
-        <module>messenger</module>
+        <module>payments-consumer</module>
     </modules>
 
     <name>root</name>

@@ -50,6 +50,12 @@ databaseChangeLog:
                     nullable: false
 
               - column:
+                  name: email
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+
+              - column:
                   name: role_id
                   type: varchar(20)
                   defaultValue: CLIENT

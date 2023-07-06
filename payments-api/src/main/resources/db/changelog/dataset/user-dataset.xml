@@ -11,6 +11,14 @@
             <column name="middle_name" value="qweqweqwe"/>
             <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
             <column name="phone_number" value="+380960150636"/>
+            <column name="email" value="maks.viskovatov@gmail.com"/>
+        </insert>
+        <insert tableName="user_account">
+            <column name="name" value="Moksemchik"/>
+            <column name="surname" value="Viskovatov" />
+            <column name="password" value="$2a$10$ylN/NYL8HtWkOBIjOzHIP.vaUy5cHe7EK.0xNssSM5DKc/dZvbQm6"/>
+            <column name="phone_number" value="+380960150637"/>
+            <column name="email" value="maksym.viskovatov@nure.ua"/>
         </insert>
         <insert tableName="user_account">
             <column name="name" value="Moksem"/>

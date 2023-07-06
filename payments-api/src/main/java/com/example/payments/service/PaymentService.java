@@ -8,10 +8,9 @@ import com.example.payments.repository.PaymentRepository;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionIsNotPossibleException;
 import com.example.payments.util.mapper.ViewToDtoMapper;
-import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 import com.example.payments.view.OutSenderReceiverPaymentView;
+import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
-    private final RabbitTemplate rabbitTemplate;
+    private final PaymentMailService paymentMailService;
     private final PaymentRepository paymentRepository;
     private final CardRepository cardRepository;
     private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutReceiverPaymentDto> viewReceiverMapper;
@@ -86,7 +85,9 @@ public class PaymentService {
         cardReceiver.setBalance(cardReceiver.getBalance().add(payment.getAmount()));
 
         createdPayment.setStatus(PaymentStatus.SENT);
-//        rabbitTemplate.convertAndSend("testQueue", "Hello, payment is created");
+
+        paymentMailService.sendReceiptToSender(createdPayment);
+        paymentMailService.sendReceiptToReceiver(createdPayment);
 
         return createdPayment;
     }

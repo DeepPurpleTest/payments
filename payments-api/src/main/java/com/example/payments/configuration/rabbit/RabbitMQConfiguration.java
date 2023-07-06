@@ -1,10 +1,11 @@
 package com.example.payments.configuration.rabbit;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,15 +13,23 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 @Configuration
 public class RabbitMQConfiguration {
-    @Value("${alert-queue.name}")
-    private String queue;
+    @Value("${alert-queue.name.sender-queue}")
+    private String senderQueue;
+    @Value("${alert-queue.name.receiver-queue}")
+    private String receiverQueue;
     @Value("${alert-queue.exchange}")
     private String exchange;
-    @Value("${alert-queue.routing-key}")
-    private String routingKey;
+    @Value("${alert-queue.routing-key.sender-key}")
+    private String senderRoutingKey;
+    @Value("${alert-queue.routing-key.receiver-key}")
+    private String receiverRoutingKey;
     @Bean
-    public Queue queue() {
-        return new Queue(queue);
+    public Queue senderQueue() {
+        return new Queue(senderQueue);
+    }
+    @Bean
+    public Queue receiverQueue() {
+        return new Queue(receiverQueue);
     }
 
     @Bean
@@ -30,9 +39,28 @@ public class RabbitMQConfiguration {
 
     // using routing key
     @Bean
-    public Binding binding() {
-        return BindingBuilder.bind(queue())
+    public Binding senderBinding() {
+        return BindingBuilder.bind(senderQueue())
                 .to(exchange())
-                .with(routingKey);
+                .with(senderRoutingKey);
+    }
+
+    @Bean
+    public Binding receiverBinding() {
+        return BindingBuilder.bind(receiverQueue())
+                .to(exchange())
+                .with(receiverRoutingKey);
+    }
+
+    @Bean
+    public MessageConverter converter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(converter());
+        return rabbitTemplate;
     }
 }
