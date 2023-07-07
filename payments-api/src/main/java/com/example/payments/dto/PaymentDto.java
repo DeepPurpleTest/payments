@@ -1,6 +1,7 @@
 package com.example.payments.dto;
 
 import com.example.payments.entity.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -28,5 +29,6 @@ public class PaymentDto {
     @NotNull
     PaymentStatus status;
     @NotEmpty
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     String date;
 }

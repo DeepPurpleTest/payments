@@ -86,8 +86,7 @@ public class PaymentService {
 
         createdPayment.setStatus(PaymentStatus.SENT);
 
-        paymentMailService.sendReceiptToSender(createdPayment);
-        paymentMailService.sendReceiptToReceiver(createdPayment);
+        paymentMailService.sendReceipt(createdPayment);
 
         return createdPayment;
     }

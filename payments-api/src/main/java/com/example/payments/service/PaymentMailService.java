@@ -14,21 +14,12 @@ public class PaymentMailService {
     @Value("${alert-queue.exchange}")
     private String exchange;
 
-    @Value("${alert-queue.routing-key.sender-key}")
-    private String senderRoutingKey;
-    @Value("${alert-queue.routing-key.receiver-key}")
-    private String receiverRoutingKey;
-
+    @Value("${alert-queue.routing-key}")
+    private String routingKey;
     private final RabbitTemplate rabbitTemplate;
     private final GenericMapper<Payment, PaymentDto> mapper;
 
-    public void sendReceiptToSender(Payment payment) {
-        System.out.println("Message sent to " + payment.getSender().getUser().getPhoneNumber());
-        rabbitTemplate.convertAndSend(exchange, senderRoutingKey, mapper.toDto(payment));
-    }
-
-    public void sendReceiptToReceiver(Payment payment) {
-        System.out.println("Message sent to " + payment.getReceiver().getUser().getPhoneNumber());
-        rabbitTemplate.convertAndSend(exchange, receiverRoutingKey, mapper.toDto(payment));
+    public void sendReceipt(Payment payment) {
+        rabbitTemplate.convertAndSend(exchange, routingKey, mapper.toDto(payment));
     }
 }

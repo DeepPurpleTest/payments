@@ -37,12 +37,8 @@ spring:
 
 #RabbitMQ alert queue configuration
 alert-queue:
-  name:
-    sender-queue: "sender-payment-queue"
-    receiver-queue: "receiver-payment-queue"
-  routing-key:
-    sender-key: "sender-mail-notification"
-    receiver-key: "receiver-mail-notification"
+  name: "payment-queue"
+  routing-key: "mail-notification"
   exchange: "payment-exchange"
 
 ---
