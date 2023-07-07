@@ -1,13 +1,13 @@
-package com.example.payments;
+package com.example.rabbit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PaymentsApplication {
+public class PaymentsConsumer {
 
     public static void main(String[] args) {
-        SpringApplication.run(PaymentsApplication.class, args);
+        SpringApplication.run(PaymentsConsumer.class, args);
     }
 
 }

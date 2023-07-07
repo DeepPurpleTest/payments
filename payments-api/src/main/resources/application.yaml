@@ -10,6 +10,12 @@ logging:
 ---
 spring:
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
   liquibase:
     enabled: true
     change-log: db/changelog/changelog.yaml
@@ -28,6 +34,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+#RabbitMQ alert queue configuration
+alert-queue:
+  name: "payment-queue"
+  routing-key: "mail-notification"
+  exchange: "payment-exchange"
 
 ---
 spring:

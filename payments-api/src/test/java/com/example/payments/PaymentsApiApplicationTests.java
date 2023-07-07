@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test-env")
-class PaymentsApplicationTests {
+class PaymentsApiApplicationTests {
     @LocalServerPort
     private Integer port;
 

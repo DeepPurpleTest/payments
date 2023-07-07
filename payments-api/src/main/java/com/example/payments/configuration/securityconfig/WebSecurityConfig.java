@@ -49,6 +49,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/request/create").hasAnyAuthority(clientAuthority)
                 .requestMatchers(HttpMethod.PATCH,"/request/update").hasAnyAuthority(adminAuthority)
                 .requestMatchers(HttpMethod.DELETE,"/request/delete").hasAnyAuthority(adminAuthority)
+                .requestMatchers(HttpMethod.GET, "/rabbit/send").permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/auth/_login")
