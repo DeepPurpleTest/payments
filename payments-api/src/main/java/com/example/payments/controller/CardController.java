@@ -9,6 +9,7 @@ import com.example.payments.util.mapper.GenericMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class CardController {
     // for admin
     @GetMapping
     public List<CardDto> findAllByCurrentUser(@AuthenticationPrincipal PersonDetails personDetails) {
-        return cardService.findAll(personDetails.getUser());
+        return cardService.findAll(personDetails.getUser().getId());
     }
     // for admin
     @GetMapping("/user/{id}")
@@ -46,19 +47,30 @@ public class CardController {
 
     // for user
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public CardDto create(@AuthenticationPrincipal PersonDetails personDetails, @RequestParam("cardType") CardType cardType) {
         Card createdCard = cardService.createCard(personDetails.getUser(), cardType);
         return mapper.toDto(createdCard);
     }
 
     // for user/admin
-    @PatchMapping("/update")
-    public CardDto update(@RequestBody @Valid CardDto cardDto,
+    @PatchMapping("/block")
+    public CardDto block(@RequestBody @Valid CardDto cardDto,
+                         BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            throw new ValidationException();
+        }
+        Card card = cardService.blockCard(mapper.toEntity(cardDto));
+        return mapper.toDto(card);
+    }
+
+    @PatchMapping("/unlock")
+    public CardDto unlock(@RequestBody @Valid CardDto cardDto,
                           BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new ValidationException();
         }
-        Card card = cardService.update(mapper.toEntity(cardDto));
+        Card card = cardService.unlockCard(mapper.toEntity(cardDto));
         return mapper.toDto(card);
     }
 

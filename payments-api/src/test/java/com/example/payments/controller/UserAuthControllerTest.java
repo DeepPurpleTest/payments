@@ -1,7 +1,6 @@
 package com.example.payments.controller;
 
 import com.example.payments.dto.RegistrationDto;
-import com.example.payments.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,6 @@ class UserAuthControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("name").exists())
                 .andExpect(jsonPath("surname").exists())
-                .andExpect(jsonPath("phoneNumber").exists())
-                .andReturn();
+                .andExpect(jsonPath("phoneNumber").exists());
     }
 }

@@ -60,8 +60,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("name").exists())
                 .andExpect(jsonPath("surname").exists())
                 .andExpect(jsonPath("middleName").exists())
-                .andExpect(jsonPath("phoneNumber").exists())
-                .andReturn();
+                .andExpect(jsonPath("phoneNumber").exists());
     }
 
     @Test
@@ -88,8 +87,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("name").exists())
                 .andExpect(jsonPath("surname").exists())
                 .andExpect(jsonPath("middleName").exists())
-                .andExpect(jsonPath("phoneNumber").exists())
-                .andReturn();
+                .andExpect(jsonPath("phoneNumber").exists());
     }
 
     @Test
