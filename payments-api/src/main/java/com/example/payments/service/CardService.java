@@ -22,15 +22,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CardService {
     private final CardRepository cardRepository;
-
-    @Transactional(readOnly = true)
-    public List<CardDto> findAll(User user) {
-        return cardRepository.findByUserId(user.getId(), CardDto.class);
-    }
+    private final UserService userService;
 
     @Transactional(readOnly = true)
     public List<CardDto> findAll(Long id) {
-        return cardRepository.findByUserId(id, CardDto.class);
+        User user = userService.findById(id, User.class);
+        return cardRepository.findByUser(user, CardDto.class);
     }
 
     @Transactional(readOnly = true)
@@ -63,13 +60,24 @@ public class CardService {
     }
 
     @Transactional
-    public Card update(Card cardToBlock) {
+    public Card blockCard(Card cardToBlock) {
         Optional<Card> byNumber = cardRepository.findByCardNumber(cardToBlock.getCardNumber(), Card.class);
         if(byNumber.isEmpty()) {
             throw new EntityNotFoundException(String.format("Card with number %s is not found", cardToBlock.getCardNumber()));
         }
         Card card = byNumber.get();
         card.setStatus(Status.BLOCKED);
+        return card;
+    }
+
+    @Transactional
+    public Card unlockCard(Card cardToUnlock) {
+        Optional<Card> byNumber = cardRepository.findByCardNumber(cardToUnlock.getCardNumber(), Card.class);
+        if(byNumber.isEmpty()) {
+            throw new EntityNotFoundException(String.format("Card with number %s is not found", cardToUnlock.getCardNumber()));
+        }
+        Card card = byNumber.get();
+        card.setStatus(Status.ACTIVE);
         return card;
     }
 

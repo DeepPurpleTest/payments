@@ -18,9 +18,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository; // final only
     @Transactional(readOnly = true)
-    public UserDto findById(Long id) {
-        Optional<UserDto> byId = userRepository.findById(id, UserDto.class);
-        return byId.orElseThrow(() -> new EntityNotFoundException(String.format("User with this id %d is not found", id)));
+    public <T> T findById(Long id, Class<T> type) {
+        Optional<T> byId = userRepository.findById(id, type);
+        return byId.orElseThrow(() -> new EntityNotFoundException(String.format("User with id: %d is not found", id)));
     }
 
     @Transactional(readOnly = true)

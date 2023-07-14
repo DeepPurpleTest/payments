@@ -32,13 +32,13 @@ class UserServiceTest {
     @Test
     void findByIdShouldReturnEntity() {
         when(userRepository.findById(1L, UserDto.class)).thenReturn(Optional.of(USER_DTO));
-        assertThat(userService.findById(1L)).isEqualTo(USER_DTO);
+        assertThat(userService.findById(1L, UserDto.class)).isEqualTo(USER_DTO);
     }
 
     @Test
     void findByIdShouldThrowEntityNotFoundException() {
         when(userRepository.findById(1L, UserDto.class)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, ()->userService.findById(1L));
+        assertThrows(EntityNotFoundException.class, ()->userService.findById(1L, UserDto.class));
     }
 
     @Test
