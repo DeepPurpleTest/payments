@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+
+  payments-mysql:
+    image: mysql:5
+    container_name: payments-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-proot" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  payments-rabbit:
+    image: rabbitmq:3.10.7-management
+    container_name: payments-rabbit
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  payments-consumer:
+    image: messenger
+    container_name: payments-consumer
+    build:
+      context: .
+      dockerfile: messenger/Dockerfile
+    ports:
+      - "9090:9090"
+    depends_on:
+      payments-rabbit:
+        condition: service_healthy
+
+  payments-api:
+    image: client:0.0.1
+    container_name: payments-api
+    build:
+      context: .
+      dockerfile: payments-api/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      payments-rabbit:
+        condition: service_healthy
+      payments-mysql:
+        condition: service_healthy
+
+
+#    environment:
+#      - SERVER_PORT= 8080
+
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/books_db
