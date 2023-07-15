@@ -12,8 +12,9 @@ spring:
 
   rabbitmq:
     #    for locally
-    #    host: localhost
-    host: payments-rabbit
+    host: localhost
+#        for docker
+#    host: payments-rabbit
     port: 5672
     username: guest
     password: guest
@@ -26,10 +27,10 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://payments-mysql:3306/payments?createDatabaseIfNotExist=true
+#    for docker
+#    url: jdbc:mysql://payments-mysql:3306/payments?createDatabaseIfNotExist=true
 #    for locally
-#    url: jdbc:mysql://localhost:3306/payments?createDatabaseIfNotExist=true
-
+    url: jdbc:mysql://localhost:3306/payments?createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

@@ -1,4 +1,4 @@
-package com.example.payments.controller;
+package com.example.payments.controller.admin;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/request")
+@RequestMapping("/admin/request")
 @RequiredArgsConstructor
-public class RequestController {
+public class AdminRequestController {
     private final RequestService requestService;
     private final GenericMapper<Card, CardDto> cardMapper;
     private final GenericMapper<Request, RequestDto> requestMapper;
@@ -37,27 +37,10 @@ public class RequestController {
         return requestService.findAll();
     }
 
-    // client
-    @GetMapping("/user")
-    public List<RequestView> findByUser(@AuthenticationPrincipal PersonDetails personDetails) {
-        return requestService.findByUser(personDetails.getUser());
-    }
-
     // admin
     @GetMapping("/phone_number")// todo validation for phone number
-    public List<RequestView> findByUserNumber(@RequestParam(value = "param", required = true) String phoneNUmber) {
+    public List<RequestView> findByUserNumber(@RequestParam(value = "param") String phoneNUmber) {
         return requestService.findByPhoneNumber(phoneNUmber);
-    }
-
-    // client
-    @PostMapping("/create")
-    public Request create(@RequestBody @Valid CardDto cardDto,
-                          BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationException();
-        }
-
-        return requestService.create(cardMapper.toEntity(cardDto));
     }
 
     // admin

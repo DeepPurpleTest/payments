@@ -1,4 +1,4 @@
-package com.example.payments.controller;
+package com.example.payments.controller.admin;
 
 import com.example.payments.dto.UserDto;
 import com.example.payments.entity.User;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 @RequiredArgsConstructor // RequiredArgsConstructor for args we need
-public class UserController {
+public class AdminUserController {
     private final UserService userService; // final only for @RequiredArgsConstructor
     private final GenericMapper<User, UserDto> mapper;
 

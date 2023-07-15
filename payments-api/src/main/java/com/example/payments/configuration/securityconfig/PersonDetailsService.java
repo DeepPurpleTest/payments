@@ -18,7 +18,7 @@ public class PersonDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         Optional<User> byPhoneNumber = userRepository.findByPhoneNumber(username, User.class);
         if(byPhoneNumber.isEmpty()) {
-            throw new EntityNotFoundException(String.format("User with this phone number %s is not found", username));
+            throw new EntityNotFoundException(String.format("User with phone number %s is not found", username));
         }
 
         return new PersonDetails(byPhoneNumber.get());
