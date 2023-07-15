@@ -1,4 +1,4 @@
-package com.example.payments.controller;
+package com.example.payments.controller.client;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/client/request")
 @RequiredArgsConstructor
-public class RequestClientController {
+public class ClientRequestController {
     private final RequestService requestService;
     private final GenericMapper<Card, CardDto> cardMapper;
 

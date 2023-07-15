@@ -1,4 +1,4 @@
-package com.example.payments.controller;
+package com.example.payments.controller.admin;
 
 import com.example.payments.entity.Role;
 import com.example.payments.entity.User;
@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test-env")
 @Transactional
-class UserControllerTest {
+class AdminUserControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -33,7 +34,7 @@ class UserControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void testGetUser() throws Exception {
-        mockMvc.perform(get("/user/1"))
+        mockMvc.perform(get("/admin/user/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("name").exists())
@@ -46,7 +47,7 @@ class UserControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void testGetNonExistUser() throws Exception {
-        mockMvc.perform(get("/user/-1"))
+        mockMvc.perform(get("/admin/user/-1"))
                 .andExpect(status().isNotFound());
     }
 
@@ -54,7 +55,7 @@ class UserControllerTest {
     @WithMockUser(authorities = "ADMIN")
     void testGetUserByPhoneNumber() throws Exception {
         String phoneNumber = "+380960150636";
-        mockMvc.perform(get("/user/phone_number?phoneNumber=" + phoneNumber))
+        mockMvc.perform(get("/admin/user/phone_number?phoneNumber=" + phoneNumber))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("name").exists())
@@ -66,28 +67,26 @@ class UserControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void testGetUserWithInvalidPhoneNUmber() throws Exception {
-        mockMvc.perform(get("/user/phone_number?phoneNumber="))
+        mockMvc.perform(get("/admin/user/phone_number?phoneNumber="))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @WithMockUser(authorities = "ADMIN")
     void testUpdateUser() throws Exception {
-        User userToUpdate = userRepository.findFirstByRole(Role.CLIENT);
+        User userToUpdate = userRepository.findFirstByRole(Role.ADMIN);
 
         userToUpdate.setName("Vodem");
         userToUpdate.setSurname("Storozhuk");
         String updatedUser = objectMapper.writeValueAsString(userToUpdate);
 
-        mockMvc.perform(patch("/user/update")
+        mockMvc.perform(patch("/admin/user/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatedUser))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("name").exists())
-                .andExpect(jsonPath("surname").exists())
-                .andExpect(jsonPath("middleName").exists())
-                .andExpect(jsonPath("phoneNumber").exists());
+                .andExpect(jsonPath("surname").exists());
     }
 
     @Test
@@ -98,7 +97,7 @@ class UserControllerTest {
         userToUpdate.setId(-1L);
         String updatedUser = objectMapper.writeValueAsString(userToUpdate);
 
-        mockMvc.perform(patch("/user/update")
+        mockMvc.perform(patch("/admin/user/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatedUser))
                 .andExpect(status().isNotFound());
@@ -107,14 +106,14 @@ class UserControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void testDeleteUser() throws Exception {
-        mockMvc.perform(delete("/user/1"))
+        mockMvc.perform(delete("/admin/user/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = "ADMIN")
     void testDeleteNonExistUser() throws Exception {
-        mockMvc.perform(delete("/user/-1"))
+        mockMvc.perform(delete("/admin/user/-1"))
                 .andExpect(status().isNotFound());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.payments.controller;
+package com.example.payments.controller.client;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/client/payment")
 @RequiredArgsConstructor
-public class PaymentController {
+public class ClientPaymentController {
     private final PaymentService paymentService;
     private final GenericMapper<Payment, InPaymentDto> inPaymentMapper;
     private final GenericMapper<Payment, OutSenderPaymentDto> outPaymentMapper;
