@@ -8,7 +8,7 @@ import com.example.payments.entity.User;
 import com.example.payments.repository.CardRepository;
 import com.example.payments.util.CardNumberBuilder;
 import com.example.payments.util.exception.EntityNotFoundException;
-import com.example.payments.util.exception.TransactionIsNotPossibleException;
+import com.example.payments.util.exception.TransactionException;
 import com.example.payments.view.identifiable.AbstractCardIdentifiable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -93,7 +93,7 @@ public class CardService {
             if (card.getBalance().compareTo(BigDecimal.valueOf(0.0)) > 0) {
                 cardRepository.delete(card);
             } else {
-                throw new TransactionIsNotPossibleException("Not enough money on balance");
+                throw new TransactionException("You have money on balance");
             }
         } else {
             throw new EntityNotFoundException("Card is not found");
