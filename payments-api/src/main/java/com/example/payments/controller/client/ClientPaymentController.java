@@ -7,6 +7,7 @@ import com.example.payments.dto.OutSenderPaymentDto;
 import com.example.payments.entity.Card;
 import com.example.payments.entity.Payment;
 import com.example.payments.service.PaymentService;
+import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
 import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 import jakarta.validation.Valid;
@@ -37,7 +38,7 @@ public class ClientPaymentController {
                                                                     BindingResult bindingResult,
                                                                     @AuthenticationPrincipal PersonDetails personDetails) {
         if(bindingResult.hasErrors()) {
-            throw new ValidationException("Card validation error"); //todo how to do better?
+            throw new EntityValidationException("Card validation error", bindingResult);
         }
 
         return paymentService.findByCardNumber(cardMapper.toEntity(dto), personDetails.getUser());

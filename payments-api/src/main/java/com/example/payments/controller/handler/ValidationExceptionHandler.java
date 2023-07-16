@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ValidationExceptionHandler {
     private final ValidationResponse validationResponse;
     @ExceptionHandler
-    public ResponseEntity<ValidationResponse> handle(EntityValidationException ex) {
+    public ResponseEntity<ValidationResponse> handleException(EntityValidationException ex) {
         return new ResponseEntity<>(validationResponse.of(ex), HttpStatus.BAD_REQUEST);
     }
 }

@@ -11,7 +11,6 @@ import com.example.payments.util.mapper.GenericMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -32,7 +31,7 @@ public class UserAuthController {
     public UserDto authenticate(@RequestBody @Valid AuthCredentialsDto credentialsDto, BindingResult bindingResult,
                                 HttpServletRequest request) throws ServletException {
         if (bindingResult.hasErrors()) {
-            throw new ValidationException("Invalid login or password");
+            throw new EntityValidationException("Invalid data format", bindingResult);
         }
 
         request.login(credentialsDto.getPhoneNumber(), credentialsDto.getPassword());
@@ -53,9 +52,9 @@ public class UserAuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public RegistrationDto register(@RequestBody @Valid RegistrationDto registrationDto,
                                     BindingResult bindingResult,
-                                    HttpServletRequest request) throws ServletException {
+                                    HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            throw new EntityValidationException("Incorrect data for registration");
+            throw new EntityValidationException("Incorrect data for registration", bindingResult);
         }
         User userToCreate = registrationMapper.toEntity(registrationDto);
         User createdUser = userService.create(userToCreate);

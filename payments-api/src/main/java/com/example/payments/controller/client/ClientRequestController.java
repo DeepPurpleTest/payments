@@ -5,10 +5,10 @@ import com.example.payments.dto.CardDto;
 import com.example.payments.entity.Card;
 import com.example.payments.entity.Request;
 import com.example.payments.service.RequestService;
+import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
 import com.example.payments.view.RequestView;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -40,7 +40,7 @@ public class ClientRequestController {
     public Request create(@RequestBody @Valid CardDto cardDto,
                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ValidationException();
+            throw new EntityValidationException("Invalid data", bindingResult);
         }
 
         return requestService.create(cardMapper.toEntity(cardDto));
