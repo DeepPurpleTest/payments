@@ -6,7 +6,7 @@ import com.example.payments.entity.*;
 import com.example.payments.repository.CardRepository;
 import com.example.payments.repository.PaymentRepository;
 import com.example.payments.util.exception.EntityNotFoundException;
-import com.example.payments.util.exception.TransactionIsNotPossibleException;
+import com.example.payments.util.exception.TransactionException;
 import com.example.payments.util.mapper.ViewToDtoMapper;
 import com.example.payments.view.OutSenderReceiverPaymentView;
 import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
@@ -93,13 +93,13 @@ public class PaymentService {
 
     private void validateTransaction(Card cardSender, Card cardReceiver, BigDecimal amount) {
         if (cardSender.getStatus().equals(Status.BLOCKED)) {
-            throw new TransactionIsNotPossibleException(String.format("Card with number %s is blocked", cardSender.getCardNumber()));
+            throw new TransactionException(String.format("Card with number %s is blocked", cardSender.getCardNumber()));
         }
         if (cardReceiver.getStatus().equals(Status.BLOCKED)) {
-            throw new TransactionIsNotPossibleException(String.format("Card with number %s is blocked", cardReceiver.getCardNumber()));
+            throw new TransactionException(String.format("Card with number %s is blocked", cardReceiver.getCardNumber()));
         }
         if((cardSender.getBalance().compareTo(amount)) < 0) {
-            throw new TransactionIsNotPossibleException("Sender has not enough money for transaction");
+            throw new TransactionException("Sender has not enough money for transaction");
         }
     }
 }

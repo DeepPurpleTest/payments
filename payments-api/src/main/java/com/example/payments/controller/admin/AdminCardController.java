@@ -3,9 +3,9 @@ package com.example.payments.controller.admin;
 import com.example.payments.dto.CardDto;
 import com.example.payments.entity.Card;
 import com.example.payments.service.CardService;
+import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +42,7 @@ public class AdminCardController {
     public CardDto block(@RequestBody @Valid CardDto cardDto,
                          BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            throw new ValidationException();
+            throw new EntityValidationException("Incorrect card data", bindingResult);
         }
         Card card = cardService.blockCard(mapper.toEntity(cardDto));
         return mapper.toDto(card);
@@ -52,7 +52,7 @@ public class AdminCardController {
     public CardDto unlock(@RequestBody @Valid CardDto cardDto,
                           BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            throw new ValidationException();
+            throw new EntityValidationException("Incorrect card data", bindingResult);
         }
         Card card = cardService.unlockCard(mapper.toEntity(cardDto));
         return mapper.toDto(card);

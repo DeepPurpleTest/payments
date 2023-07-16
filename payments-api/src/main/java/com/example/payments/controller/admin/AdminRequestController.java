@@ -6,10 +6,10 @@ import com.example.payments.dto.RequestDto;
 import com.example.payments.entity.Card;
 import com.example.payments.entity.Request;
 import com.example.payments.service.RequestService;
+import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
 import com.example.payments.view.RequestView;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -49,7 +49,7 @@ public class AdminRequestController {
                              BindingResult bindingResult,
                              @AuthenticationPrincipal PersonDetails personDetails) {
         if(bindingResult.hasErrors()) {
-            throw new ValidationException();
+            throw new EntityValidationException("Incorrect data for update", bindingResult);
         }
 
         Request request = requestService.update(personDetails.getUser(), cardMapper.toEntity(cardDto));
