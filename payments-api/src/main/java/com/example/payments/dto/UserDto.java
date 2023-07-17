@@ -1,6 +1,7 @@
 package com.example.payments.dto;
 
 import com.example.payments.util.ApplicationConstants.Validation;
+import com.example.payments.util.validation.annotation.ContactNumberConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -30,13 +31,10 @@ public class UserDto {
             message = Validation.MIDDLE_NAME_MESSAGE)
     private String middleName;
     @NotEmpty
-    @Length(min = Validation.MIN_PHONE_NUMBER_LENGTH,
-            max = Validation.MAX_PHONE_NUMBER_LENGTH,
-            message = Validation.PHONE_NUMBER_MESSAGE)
+    @ContactNumberConstraint
     private String phoneNumber;
 
     @Nullable
     @Email
-    @Length() // todo complete dto
     private String email;
 }
