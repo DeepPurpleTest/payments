@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import java.math.BigDecimal;
 
@@ -12,9 +13,9 @@ import java.math.BigDecimal;
 @Builder
 @Jacksonized
 public class InPaymentDto {
-    @NotNull
+    @CreditCardNumber
     String sender;
-    @NotNull
+    @CreditCardNumber
     String receiver;
     @NotNull
     @Min(5)

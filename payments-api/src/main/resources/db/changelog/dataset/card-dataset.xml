@@ -6,19 +6,19 @@
 
     <changeSet id="card dataset" author="moksem">
         <insert tableName="card">
-            <column name="card_number" value="4444444444444444"/>
+            <column name="card_number" value="4787382373512113"/>
             <column name="user_id" value="1"/>
             <column name="balance" value="27.54"/>
             <column name="status_id" value="ACTIVE"/>
         </insert>
         <insert tableName="card">
-            <column name="card_number" value="4444444444444443"/>
+            <column name="card_number" value="4337273020704515"/>
             <column name="user_id" value="1"/>
             <column name="balance" value="50.02"/>
             <column name="status_id" value="ACTIVE"/>
         </insert>
         <insert tableName="card">
-            <column name="card_number" value="4444444444444445"/>
+            <column name="card_number" value="4440602870850073"/>
             <column name="user_id" value="2"/>
             <column name="balance" value="555.77"/>
             <column name="status_id" value="ACTIVE"/>

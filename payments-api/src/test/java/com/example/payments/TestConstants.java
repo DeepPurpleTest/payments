@@ -54,19 +54,19 @@ public final class TestConstants {
             .build();
 
     public static final CardDto CARD_DTO_NULL_BALANCE = CardDto.builder()
-            .cardNumber("4444444444444444")
+            .cardNumber("4787382373512113")
             .status(Status.ACTIVE)
             .balance(new BigDecimal(0))
             .build();
 
     public static final CardDto CARD_DTO_WITH_BALANCE = CardDto.builder()
-            .cardNumber("4444444444444444")
+            .cardNumber("4787382373512113")
             .status(Status.ACTIVE)
             .balance(new BigDecimal(456))
             .build();
 
     public static final CardDto NON_EXIST_CARD_DTO = CardDto.builder()
-            .cardNumber("")
+            .cardNumber("4504724735916908")
             .status(Status.ACTIVE)
             .balance(new BigDecimal(0))
             .build();
