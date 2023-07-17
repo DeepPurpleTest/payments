@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class EntityResponse implements ResponseWrapper<EntityResponse, RuntimeException> {
     private String message;
     private String timestamp;
-
     @Override
     public EntityResponse of(RuntimeException ex) {
         this.message = ex.getMessage();
