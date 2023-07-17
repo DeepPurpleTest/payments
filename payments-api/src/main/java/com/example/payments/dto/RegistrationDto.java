@@ -1,6 +1,8 @@
 package com.example.payments.dto;
 
 import com.example.payments.util.ApplicationConstants;
+import com.example.payments.util.validation.annotation.ContactNumberConstraint;
+import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
@@ -27,12 +29,14 @@ public class RegistrationDto {
             message = ApplicationConstants.Validation.MIDDLE_NAME_MESSAGE)
     private String middleName;
     @Nullable
-    @Length() // todo complete dto
+    @ContactNumberConstraint
     private String phoneNumber;
     @Nullable
-    @Length() // todo complete dto
+    @Length(min = ApplicationConstants.Validation.MIN_PASSWORD_LENGTH,
+            max = ApplicationConstants.Validation.MAX_PASSWORD_LENGTH,
+            message = ApplicationConstants.Validation.PASSWORD_MESSAGE)
     private String password;
     @Nullable
-    @Length() // todo complete dto
+    @Email
     private String email;
 }

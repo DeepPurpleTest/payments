@@ -5,6 +5,7 @@ import com.example.payments.util.response.ObjectError;
 import com.example.payments.util.response.ResponseWrapper;
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,9 +21,9 @@ public class ValidationResponse implements ResponseWrapper<ValidationResponse, E
     public ValidationResponse of(EntityValidationException ex) {
         this.message = ex.getMessage();
         this.errors = ex.getBindingResult().getAllErrors().stream()
-                .map(er -> (org.springframework.validation.FieldError) er)
-                .map(er -> new ObjectError(er.getField(), er.getDefaultMessage()))
+                .map(er -> new ObjectError(((FieldError) er).getField(), er.getDefaultMessage()))
                 .toList();
+
         this.timestamp = LocalDateTime.now().toString();
         return this;
     }
