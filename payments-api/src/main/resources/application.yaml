@@ -9,6 +9,8 @@ logging:
 
 ---
 spring:
+  main:
+    allow-bean-definition-overriding: true
 
   rabbitmq:
     #    for locally
@@ -41,11 +43,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+  messages:
+    basename: lang/messages
+    always-use-message-format: false
+    encoding: UTF-8
+    fallback-to-system-locale: true
+
 #RabbitMQ alert queue configuration
 alert-queue:
   name: "payment-queue"
   routing-key: "mail-notification"
   exchange: "payment-exchange"
+
 
 ---
 spring:
