@@ -3,7 +3,7 @@ package com.example.payments.service;
 import com.example.payments.entity.*;
 import com.example.payments.repository.RequestRepository;
 import com.example.payments.util.exception.EntityNotFoundException;
-import com.example.payments.view.RequestView;
+import com.example.payments.dto.view.RequestView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

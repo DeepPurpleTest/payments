@@ -1,11 +1,11 @@
 package com.example.payments.dto;
 
 import jakarta.annotation.Nullable;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
+@Setter
 @Builder
 @Jacksonized
 public class AuthCredentialsDto {

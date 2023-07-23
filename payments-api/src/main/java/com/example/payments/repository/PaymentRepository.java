@@ -11,9 +11,8 @@ import java.util.List;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-    <T> List<T> findBySenderOrReceiver(Card sender, Card receiver, Class<T> type); //todo nested dto
-    @Query("select distinct p.id as id, p.sender as sender, p.receiver as receiver," +
-           " p.amount as amount, p.status as status, p.date as date " +
+    <T> List<T> findBySenderOrReceiver(Card sender, Card receiver, Class<T> type);
+    @Query("select distinct p " +
            "from Payment p " +
            "left join Card c on c.cardNumber = p.sender or c.cardNumber = p.receiver " +
            "where c.user.id = :userId")

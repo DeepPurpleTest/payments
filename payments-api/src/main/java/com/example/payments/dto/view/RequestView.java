@@ -1,4 +1,4 @@
-package com.example.payments.view;
+package com.example.payments.dto.view;
 
 import com.example.payments.entity.RequestStatus;
 

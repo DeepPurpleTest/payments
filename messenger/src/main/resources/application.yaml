@@ -5,8 +5,9 @@ spring:
 
   rabbitmq:
 #    for locally
-#    host: localhost
-    host: payments-rabbit
+    host: localhost
+#    for docker
+#    host: payments-rabbit
     port: 5672
     username: guest
     password: guest

@@ -1,9 +1,8 @@
 package com.example.payments.dto;
 
+import com.example.payments.dto.identifiable.AbstractCardIdentifiable;
 import com.example.payments.entity.Status;
-import com.example.payments.view.identifiable.AbstractCardIdentifiable;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.lang.Nullable;
@@ -11,16 +10,17 @@ import org.springframework.lang.Nullable;
 import java.math.BigDecimal;
 
 @Getter
+@Setter
 @Builder
 @Jacksonized
 public class CardDto implements AbstractCardIdentifiable {
     @Nullable
-    Long id;
+    private Long id;
     @CreditCardNumber
-    String cardNumber;
+    private String cardNumber;
     @Nullable
-    BigDecimal balance;
+    private BigDecimal balance;
     @Nullable
-    Status status;
+    private Status status;
 
 }

@@ -1,7 +1,7 @@
-package com.example.payments.view;
+package com.example.payments.dto.view;
 
+import com.example.payments.dto.identifiable.AbstractCardIdentifiable;
 import com.example.payments.entity.Status;
-import com.example.payments.view.identifiable.AbstractCardIdentifiable;
 
 import java.math.BigDecimal;
 
