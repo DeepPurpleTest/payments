@@ -1,15 +1,10 @@
 package com.example.payments.service;
 
-import com.example.payments.dto.OutReceiverPaymentDto;
-import com.example.payments.dto.OutSenderPaymentDto;
 import com.example.payments.entity.*;
 import com.example.payments.repository.CardRepository;
 import com.example.payments.repository.PaymentRepository;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionException;
-import com.example.payments.util.mapper.ViewToDtoMapper;
-import com.example.payments.view.OutSenderReceiverPaymentView;
-import com.example.payments.view.identifiable.AbstractOutPaymentIdentifiable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,41 +20,29 @@ public class PaymentService {
     private final PaymentMailService paymentMailService;
     private final PaymentRepository paymentRepository;
     private final CardRepository cardRepository;
-    private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutReceiverPaymentDto> viewReceiverMapper;
-    private final ViewToDtoMapper<OutSenderReceiverPaymentView, OutSenderPaymentDto> viewSenderMapper;
 
-    @Transactional(readOnly = true)
-    public List<AbstractOutPaymentIdentifiable> findByCurrentUser(User user) {
-        List<OutSenderReceiverPaymentView> payments = paymentRepository
-                .findAllByUserId(user.getId(), OutSenderReceiverPaymentView.class);
-
-        return outPaymentViewConvertor(payments, user);
-    }
-
-    private List<AbstractOutPaymentIdentifiable> outPaymentViewConvertor(List<? extends AbstractOutPaymentIdentifiable> payments, User user) {
-        return payments.stream().map(payment -> {
-            OutSenderReceiverPaymentView view = (OutSenderReceiverPaymentView) payment;
-            String senderNumber = view.getSender().getUser().getPhoneNumber();
-            if (senderNumber.equals(user.getPhoneNumber())) {
-                return viewSenderMapper.toDto(view);
-            }
-            return viewReceiverMapper.toDto(view);
-        }).toList();
+    @Transactional
+    public Payment findById(Payment payment) {
+        Optional<Payment> byId = paymentRepository.findById(payment.getId());
+        return byId.orElseThrow(() -> new EntityNotFoundException("Payment is not found"));
     }
 
     @Transactional(readOnly = true)
-    public List<AbstractOutPaymentIdentifiable> findByCardNumber(Card card, User user) {
+    public List<Payment> findByCurrentUser(User user) {
+        return paymentRepository.findAllByUserId(user.getId(), Payment.class);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Payment> findByCardNumber(Card card) {
         Optional<Card> byId = cardRepository.findByCardNumber(card.getCardNumber(), Card.class);
-        if(byId.isEmpty()) {
+        if (byId.isEmpty()) {
             throw new EntityNotFoundException(String.format("Card with number %s is not found", card.getCardNumber()));
         }
-        List<OutSenderReceiverPaymentView> payments = paymentRepository
-                .findBySenderOrReceiver(card, card, OutSenderReceiverPaymentView.class);
-        return outPaymentViewConvertor(payments, user);
+        return paymentRepository.findBySenderOrReceiver(card, card, Payment.class);
     }
 
     @Transactional
-    public Payment create(Payment payment) {
+    public Payment create(Payment payment, User currentUser) {
         Optional<Card> senderById = cardRepository.findByCardNumber(payment.getSender().getCardNumber(), Card.class);
         Optional<Card> receiverById = cardRepository.findByCardNumber(payment.getReceiver().getCardNumber(), Card.class);
 
@@ -73,7 +56,7 @@ public class PaymentService {
         Card cardSender = senderById.get();
         Card cardReceiver = receiverById.get();
 
-        validateTransaction(cardSender, cardReceiver, payment.getAmount());
+        validateTransaction(cardSender, cardReceiver, payment.getAmount(), currentUser);
 
         payment.setSender(cardSender);
         payment.setReceiver(cardReceiver);
@@ -84,6 +67,8 @@ public class PaymentService {
         cardSender.setBalance(cardSender.getBalance().subtract(payment.getAmount()));
         cardReceiver.setBalance(cardReceiver.getBalance().add(payment.getAmount()));
 
+        createdPayment.setSenderBalanceAfterPayment(cardSender.getBalance());
+        createdPayment.setReceiverBalanceAfterPayment(cardReceiver.getBalance());
         createdPayment.setStatus(PaymentStatus.SENT);
 
         paymentMailService.sendReceipt(createdPayment);
@@ -91,14 +76,17 @@ public class PaymentService {
         return createdPayment;
     }
 
-    private void validateTransaction(Card cardSender, Card cardReceiver, BigDecimal amount) {
+    private void validateTransaction(Card cardSender, Card cardReceiver, BigDecimal amount, User userSender) {
+        if (!cardSender.getUser().getId().equals(userSender.getId())) {
+            throw new TransactionException(String.format("Card with number %s is not found", cardSender.getCardNumber()));
+        }
         if (cardSender.getStatus().equals(Status.BLOCKED)) {
             throw new TransactionException(String.format("Card with number %s is blocked", cardSender.getCardNumber()));
         }
         if (cardReceiver.getStatus().equals(Status.BLOCKED)) {
             throw new TransactionException(String.format("Card with number %s is blocked", cardReceiver.getCardNumber()));
         }
-        if((cardSender.getBalance().compareTo(amount)) < 0) {
+        if ((cardSender.getBalance().compareTo(amount)) < 0) {
             throw new TransactionException("Sender has not enough money for transaction");
         }
     }

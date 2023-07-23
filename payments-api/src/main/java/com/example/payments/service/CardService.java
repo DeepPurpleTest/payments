@@ -9,7 +9,7 @@ import com.example.payments.repository.CardRepository;
 import com.example.payments.util.CardNumberBuilder;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionException;
-import com.example.payments.view.identifiable.AbstractCardIdentifiable;
+import com.example.payments.dto.identifiable.AbstractCardIdentifiable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

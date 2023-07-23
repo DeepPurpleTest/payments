@@ -32,6 +32,10 @@ public class Payment {
     private Card receiver;
     @Column(name = "amount")
     private BigDecimal amount;
+    @Column(name = "card_sender_balance")
+    private BigDecimal senderBalanceAfterPayment;
+    @Column(name = "card_receiver_balance")
+    private BigDecimal receiverBalanceAfterPayment;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;

@@ -16,7 +16,7 @@ public class LocaleConfig implements WebMvcConfigurer{
 
         messageSource.setBasename("classpath:lang/messages");
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setUseCodeAsDefaultMessage(false);
+        messageSource.setUseCodeAsDefaultMessage(false); // set message code if message not found
         return messageSource;
     }
 

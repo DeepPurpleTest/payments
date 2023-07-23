@@ -1,5 +1,6 @@
 package com.example.payments.dto;
 
+import com.example.payments.dto.identifiable.AbstractUserIdentifiable;
 import com.example.payments.util.ApplicationConstants.Validation;
 import com.example.payments.util.validation.annotation.ContactNumberConstraint;
 import jakarta.validation.constraints.Email;
@@ -10,9 +11,10 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.Nullable;
 
 @Getter
+@Setter
 @Builder
 @Jacksonized
-public class UserDto {
+public class UserDto implements AbstractUserIdentifiable {
     @Nullable
     private Long id;
     @NotEmpty

@@ -26,7 +26,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/auth/_login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/_login").anonymous()
                 .requestMatchers(HttpMethod.POST, "/auth/register").anonymous()
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**").permitAll()

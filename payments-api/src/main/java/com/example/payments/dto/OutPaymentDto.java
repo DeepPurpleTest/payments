@@ -1,12 +1,11 @@
 package com.example.payments.dto;
 
+import com.example.payments.dto.identifiable.AbstractOutPaymentIdentifiable;
 import com.example.payments.entity.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
@@ -15,20 +14,22 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @Jacksonized
-public class PaymentDto {
+public class OutPaymentDto implements AbstractOutPaymentIdentifiable {
     @NotNull
-    CardDto sender;
+    private Long id;
     @NotNull
-    CardDto receiver;
+    private String sender;
     @NotNull
-    UserDto userSender;
+    private String receiver;
     @NotNull
-    UserDto userReceiver;
+    private String currentUserCard;
     @NotNull
-    BigDecimal amount;
+    private BigDecimal currentCardBalance;
     @NotNull
-    PaymentStatus status;
+    private BigDecimal amount;
+    @NotNull
+    private PaymentStatus status;
     @NotEmpty
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
-    String date;
+    private String date;
 }

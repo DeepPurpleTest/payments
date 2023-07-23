@@ -8,7 +8,7 @@ import com.example.payments.entity.Request;
 import com.example.payments.service.RequestService;
 import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
-import com.example.payments.view.RequestView;
+import com.example.payments.dto.view.RequestView;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -44,6 +44,18 @@ databaseChangeLog:
                     nullable: false
 
               - column:
+                  name: card_sender_balance
+                  type: decimal(10, 2)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: card_receiver_balance
+                  type: decimal(10, 2)
+                  constraints:
+                    nullable: true
+
+              - column:
                   name: status
                   type: varchar(20)
                   constraints:

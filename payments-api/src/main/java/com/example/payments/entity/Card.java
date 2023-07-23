@@ -1,6 +1,6 @@
 package com.example.payments.entity;
 
-import com.example.payments.view.identifiable.AbstractCardIdentifiable;
+import com.example.payments.dto.identifiable.AbstractCardIdentifiable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
