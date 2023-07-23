@@ -11,8 +11,8 @@ import com.example.payments.util.exception.EntityValidationException;
 import com.example.payments.util.mapper.GenericMapper;
 import com.example.payments.util.mapper.PaymentOutPaymentDtoMapper;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -61,11 +61,12 @@ public class ClientPaymentController {
                 .toList();
     }
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public OutPaymentDto createTransaction(@RequestBody @Valid InPaymentDto dto,
                                                  BindingResult bindingResult,
                                                  @AuthenticationPrincipal PersonDetails personDetails) {
         if(bindingResult.hasErrors()) {
-            throw new ValidationException("Cannot create transaction");
+            throw new EntityValidationException("Cannot create transaction", bindingResult);
         }
         Payment paymentToCreate = inPaymentMapper.toEntity(dto);
         Payment createdPayment = paymentService.create(paymentToCreate, personDetails.getUser());

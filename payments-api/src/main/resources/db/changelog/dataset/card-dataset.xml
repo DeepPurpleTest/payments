@@ -14,13 +14,13 @@
         <insert tableName="card">
             <column name="card_number" value="4337273020704515"/>
             <column name="user_id" value="1"/>
-            <column name="balance" value="50.02"/>
+            <column name="balance" value="50.0"/>
             <column name="status_id" value="ACTIVE"/>
         </insert>
         <insert tableName="card">
             <column name="card_number" value="4440602870850073"/>
             <column name="user_id" value="2"/>
-            <column name="balance" value="555.77"/>
+            <column name="balance" value="555.0"/>
             <column name="status_id" value="ACTIVE"/>
         </insert>
         <rollback>
