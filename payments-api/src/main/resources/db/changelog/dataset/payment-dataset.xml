@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="payment dataset" author="moksem">
+        <insert tableName="payment">
+            <column name="sender" value="4337273020704515"/>
+            <column name="receiver" value="4440602870850073"/>
+            <column name="amount" value="500.0"/>
+            <column name="card_sender_balance" value="75.0"/>
+            <column name="card_receiver_balance" value="550.0"/>
+            <column name="status" value="SENT"/>
+            <column name="date" value="2023-07-21 21:22:11"/>
+        </insert>
+        <insert tableName="payment">
+            <column name="sender" value="4440602870850073"/>
+            <column name="receiver" value="4337273020704515"/>
+            <column name="amount" value="500.0"/>
+            <column name="card_sender_balance" value="50.0"/>
+            <column name="card_receiver_balance" value="575.0"/>
+            <column name="status" value="SENT"/>
+            <column name="date" value="2023-07-21 21:24:11"/>
+        </insert>
+        <insert tableName="payment">
+            <column name="sender" value="4440602870850073"/>
+            <column name="receiver" value="4787382373512113"/>
+            <column name="amount" value="25.0"/>
+            <column name="card_sender_balance" value="555.0"/>
+            <column name="card_receiver_balance" value="20.0"/>
+            <column name="status" value="SENT"/>
+            <column name="date" value="2023-07-21 21:26:11"/>
+        </insert>
+        <rollback>
+            DELETE FROM payment;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

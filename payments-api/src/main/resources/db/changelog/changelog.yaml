@@ -30,3 +30,5 @@ databaseChangeLog:
       file: db/changelog/dataset/user-dataset.xml
   - include:
       file: db/changelog/dataset/card-dataset.xml
+  - include:
+      file: db/changelog/dataset/payment-dataset.xml

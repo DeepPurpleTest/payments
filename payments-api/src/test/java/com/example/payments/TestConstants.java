@@ -2,6 +2,7 @@ package com.example.payments;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
+import com.example.payments.dto.InPaymentDto;
 import com.example.payments.dto.UserDto;
 import com.example.payments.entity.Role;
 import com.example.payments.entity.Status;
@@ -69,5 +70,12 @@ public final class TestConstants {
             .cardNumber("4504724735916908")
             .status(Status.ACTIVE)
             .balance(new BigDecimal(0))
+            .build();
+
+    public static final InPaymentDto IN_PAYMENT_DTO = InPaymentDto.builder()
+            .id(1L)
+            .sender("4337273020704515")
+            .receiver("4440602870850073")
+            .amount(new BigDecimal(25))
             .build();
 }
