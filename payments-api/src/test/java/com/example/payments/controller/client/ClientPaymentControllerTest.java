@@ -4,9 +4,11 @@ import com.example.payments.dto.CardDto;
 import com.example.payments.dto.InPaymentDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,6 +29,8 @@ class ClientPaymentControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    private RabbitTemplate rabbitTemplate;
 
     @Test
     @WithUserDetails("+380960150636")
