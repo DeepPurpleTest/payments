@@ -1,6 +1,7 @@
 package com.example.payments;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.itextpdf.html2pdf.ConverterProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,5 +15,10 @@ public class PaymentsApiApplication {
     @Bean
     public PhoneNumberUtil phoneNumberUtil() {
         return PhoneNumberUtil.getInstance();
+    }
+
+    @Bean
+    public ConverterProperties converterProperties() {
+        return new ConverterProperties();
     }
 }

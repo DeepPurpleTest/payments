@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
         scheme = "basic"
 )
 @OpenAPIDefinition(
-        info = @Info(title = "Sample API", version = "v1"),
+        info = @Info(title = "Payments API", version = "v1"),
         security = @SecurityRequirement(name = "basicAuth") // references the name defined in the line 3
 )
 public class OpenAPIConfiguration {
