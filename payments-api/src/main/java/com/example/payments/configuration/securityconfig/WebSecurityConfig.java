@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/client/card/**").hasAnyAuthority(clientAuthority)
                 .requestMatchers("/client/payment/**").hasAnyAuthority(clientAuthority)
                 .requestMatchers("/client/request/**").hasAnyAuthority(clientAuthority)
-                .requestMatchers("/client/receipt/**").permitAll()
+                .requestMatchers("/client/receipt/**").hasAnyAuthority(clientAuthority)
                 .requestMatchers("/css/**").hasAnyAuthority(clientAuthority)
                 .and()
                 .logout()
