@@ -6,7 +6,9 @@ logging:
     root: debug
     org.hibernate: debug
     org.org.springframework.web: debug
-
+#
+#springdoc:
+#  model-and-view-allowed: true
 ---
 spring:
   main:
@@ -55,6 +57,8 @@ alert-queue:
   routing-key: "mail-notification"
   exchange: "payment-exchange"
 
+springdoc:
+  model-and-view-allowed: true
 
 ---
 spring:

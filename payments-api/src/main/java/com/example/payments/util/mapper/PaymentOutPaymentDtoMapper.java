@@ -10,7 +10,7 @@ import org.mapstruct.*;
 public interface PaymentOutPaymentDtoMapper extends GenericMapper<Payment, OutPaymentDto> {
     @Mapping(source = "payment.id", target = "id")
     @Mapping(source = "payment.status", target = "status")
-    @Mapping(source = "payment.date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
+    //@Mapping(source = "payment.date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     OutPaymentDto toDto(Payment payment, User user);
 
     @AfterMapping
