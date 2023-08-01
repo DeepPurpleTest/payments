@@ -3,9 +3,9 @@ server:
 
 logging:
   level:
-    root: debug
-    org.hibernate: debug
-    org.org.springframework.web: debug
+    root: info
+    org.hibernate: info
+    org.org.springframework.web: info
 #
 #springdoc:
 #  model-and-view-allowed: true
