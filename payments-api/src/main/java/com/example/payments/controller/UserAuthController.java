@@ -32,8 +32,7 @@ public class UserAuthController {
     @ResponseStatus(HttpStatus.OK)
     public UserDto authenticate(@RequestBody @Valid AuthCredentialsDto credentialsDto, BindingResult bindingResult,
                                 HttpServletRequest request) throws ServletException {
-        log.info("Authentication starts...");
-        log.trace("Trace?");
+        log.info("authenticate() start");
 
         if (bindingResult.hasErrors()) {
             throw new EntityValidationException("Invalid data format", bindingResult);
@@ -44,7 +43,7 @@ public class UserAuthController {
         PersonDetails user = (PersonDetails) auth.getPrincipal();
         User authUser = user.getUser();
 
-        log.info("Authentication end");
+        log.info("authenticate() end");
 
         return userMapper.toDto(authUser);
     }
@@ -52,7 +51,9 @@ public class UserAuthController {
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest request) throws ServletException {
+        log.info("logout() start");
         request.logout();
+        log.info("logout() end");
     }
 
     @PostMapping("/register")
@@ -71,7 +72,12 @@ public class UserAuthController {
 
     @GetMapping("/account")
     public UserDto current(@AuthenticationPrincipal PersonDetails personDetails) {
+        log.info("current() starts");
+
         User user = personDetails.getUser();
+
+        log.info("current() end");
+
         return userMapper.toDto(user);
     }
 }
