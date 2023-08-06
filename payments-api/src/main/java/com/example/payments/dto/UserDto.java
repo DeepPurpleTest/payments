@@ -1,6 +1,7 @@
 package com.example.payments.dto;
 
 import com.example.payments.dto.identifiable.AbstractUserIdentifiable;
+import com.example.payments.entity.Role;
 import com.example.payments.util.ApplicationConstants.Validation;
 import com.example.payments.util.validation.annotation.ContactNumberConstraint;
 import jakarta.validation.constraints.Email;
@@ -39,4 +40,7 @@ public class UserDto implements AbstractUserIdentifiable {
     @Nullable
     @Email
     private String email;
+
+    @Nullable
+    private Role role;
 }

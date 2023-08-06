@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,12 +43,11 @@ public class WebSecurityConfig {
                 .requestMatchers("/client/receipt/**").hasAnyAuthority(clientAuthority)
                 .requestMatchers("/css/**").hasAnyAuthority(clientAuthority)
                 .and()
-                .logout()
-                .logoutSuccessUrl("/auth/_login")
-                .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .httpBasic(Customizer.withDefaults())
+                .sessionManagement().disable();
 
         return http.build();
     }
