@@ -42,10 +42,7 @@ class ClientPaymentControllerTest {
     @Test
     @WithUserDetails("+380960150636")
     void testGetPaymentById() throws Exception {
-        String inPaymentDto = objectMapper.writeValueAsString(IN_PAYMENT_DTO);
-        mockMvc.perform(post("/client/payment/_find")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(inPaymentDto))
+        mockMvc.perform(get("/client/payment/find/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("sender").exists())
@@ -60,11 +57,8 @@ class ClientPaymentControllerTest {
     @Test
     @WithUserDetails("+380960150636")
     void testGetPaymentByIdThrowValidationException() throws Exception {
-        String inPaymentDto = objectMapper.writeValueAsString(InPaymentDto.builder().build());
-        mockMvc.perform(post("/client/payment/_find")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(inPaymentDto))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(get("/client/payment/find/-1"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/client/payment/**").hasAnyAuthority(clientAuthority)
                 .requestMatchers("/client/request/**").hasAnyAuthority(clientAuthority)
                 .requestMatchers("/client/receipt/**").hasAnyAuthority(clientAuthority)
-                .requestMatchers("/css/**").hasAnyAuthority(clientAuthority)
+                .requestMatchers("/css/**").permitAll()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
