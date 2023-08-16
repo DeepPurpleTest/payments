@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @Jacksonized
+@ToString
 public class CardDto implements AbstractCardIdentifiable {
     @Nullable
     private Long id;

@@ -24,12 +24,16 @@
     <h2 class="text-xl font-bold payment-details-margin">Payment Details</h2>
     <table class="table-fixed w-2/6">
         <tr>
-            <div class="text-green-600">Received by</div>
-            <div class="payment-details-margin" th:text="${sender.getName() + ' ' + sender.getSurname()}"></div>
+            <td>
+                <div class="text-green-600">Received by</div>
+                <div class="payment-details-margin" th:text="${sender.getName() + ' ' + sender.getSurname()}"></div>
+            </td>
         </tr>
         <tr>
-            <div class="text-green-600">Received from</div>
-            <div class="payment-details-margin" th:text="${receiver.getName() + ' ' + receiver.getSurname()}"></div>
+            <td>
+                <div class="text-green-600">Received from</div>
+                <div class="payment-details-margin" th:text="${receiver.getName() + ' ' + receiver.getSurname()}"></div>
+            </td>
         </tr>
     </table>
     <div class="flex flex-row-reverse div-right">

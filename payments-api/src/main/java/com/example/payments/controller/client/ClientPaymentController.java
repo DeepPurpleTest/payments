@@ -12,6 +12,7 @@ import com.example.payments.util.mapper.GenericMapper;
 import com.example.payments.util.mapper.PaymentOutPaymentDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/client/payment")
 @RequiredArgsConstructor
+@Slf4j
 public class ClientPaymentController {
     private final PaymentService paymentService;
     private final GenericMapper<Payment, InPaymentDto> inPaymentMapper;
@@ -36,14 +38,11 @@ public class ClientPaymentController {
                 .toList();
     }
 
-    @PostMapping("/_find")
-    public OutPaymentDto findOne(@RequestBody @Valid InPaymentDto dto,
-                                 BindingResult bindingResult,
-                                 @AuthenticationPrincipal PersonDetails personDetails) {
-        if(bindingResult.hasErrors()) {
-            throw new EntityValidationException("Invalid entity payment", bindingResult);
-        }
-        Payment payment = paymentService.findById(inPaymentMapper.toEntity(dto));
+    @GetMapping("/find/{id}")
+    public OutPaymentDto findOne(@AuthenticationPrincipal PersonDetails personDetails,
+                                 @PathVariable("id") Long id) {
+        System.out.println(id);
+        Payment payment = paymentService.findById(id);
         return outPaymentMapper.toDto(payment, personDetails.getUser());
     }
 
@@ -51,6 +50,7 @@ public class ClientPaymentController {
     public List<OutPaymentDto> findAllByCardNumber(@RequestBody @Valid CardDto dto,
                                               BindingResult bindingResult,
                                               @AuthenticationPrincipal PersonDetails personDetails) {
+        log.info(dto.toString());
         if(bindingResult.hasErrors()) {
             throw new EntityValidationException("Card validation error", bindingResult);
         }

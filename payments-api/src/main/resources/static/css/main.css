@@ -556,10 +556,6 @@ video {
     flex-direction: row;
 }
 
-.flex-row-reverse {
-    flex-direction: row-reverse;
-}
-
 .flex-col {
     flex-direction: column;
 }
@@ -570,10 +566,6 @@ video {
 
 .justify-center {
     justify-content: center;
-}
-
-.justify-between {
-    justify-content: space-between;
 }
 
 .font-medium {

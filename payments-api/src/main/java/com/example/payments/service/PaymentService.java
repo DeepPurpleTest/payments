@@ -22,8 +22,8 @@ public class PaymentService {
     private final CardRepository cardRepository;
 
     @Transactional
-    public Payment findById(Payment payment) {
-        Optional<Payment> byId = paymentRepository.findById(payment.getId());
+    public Payment findById(Long id) {
+        Optional<Payment> byId = paymentRepository.findById(id);
         return byId.orElseThrow(() -> new EntityNotFoundException("Payment is not found"));
     }
 
