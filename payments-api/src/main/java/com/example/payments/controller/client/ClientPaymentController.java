@@ -41,7 +41,6 @@ public class ClientPaymentController {
     @GetMapping("/find/{id}")
     public OutPaymentDto findOne(@AuthenticationPrincipal PersonDetails personDetails,
                                  @PathVariable("id") Long id) {
-        System.out.println(id);
         Payment payment = paymentService.findById(id);
         return outPaymentMapper.toDto(payment, personDetails.getUser());
     }
@@ -50,7 +49,6 @@ public class ClientPaymentController {
     public List<OutPaymentDto> findAllByCardNumber(@RequestBody @Valid CardDto dto,
                                               BindingResult bindingResult,
                                               @AuthenticationPrincipal PersonDetails personDetails) {
-        log.info(dto.toString());
         if(bindingResult.hasErrors()) {
             throw new EntityValidationException("Card validation error", bindingResult);
         }
