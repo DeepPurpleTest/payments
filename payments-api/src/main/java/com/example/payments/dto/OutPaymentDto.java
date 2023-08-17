@@ -2,6 +2,7 @@ package com.example.payments.dto;
 
 import com.example.payments.dto.identifiable.AbstractOutPaymentIdentifiable;
 import com.example.payments.entity.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,5 +32,6 @@ public class OutPaymentDto implements AbstractOutPaymentIdentifiable {
     @NotNull
     private PaymentStatus status;
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private LocalDateTime date;
 }
