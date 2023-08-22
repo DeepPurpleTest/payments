@@ -1,5 +1,6 @@
 package com.example.payments.controller.client;
 
+import com.example.monitoringservice.service.TimeCheckerService;
 import com.example.payments.dto.CardDto;
 import com.example.payments.dto.InPaymentDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +32,8 @@ class ClientPaymentControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private RabbitTemplate rabbitTemplate;
+    @MockBean
+    private TimeCheckerService timeCheckerService;
 
     @Test
     @WithUserDetails("+380960150636")

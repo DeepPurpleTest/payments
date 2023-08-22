@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.example.payments", "com.example.monitoringservice"})
 public class PaymentsApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(PaymentsApiApplication.class, args);

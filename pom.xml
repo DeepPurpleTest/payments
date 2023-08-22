@@ -25,6 +25,7 @@
     <modules>
         <module>payments-api</module>
         <module>messenger</module>
+        <module>monitoring-service</module>
     </modules>
 
     <name>root</name>

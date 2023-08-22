@@ -1,5 +1,7 @@
 package com.example.payments.controller.client;
 
+import com.example.monitoringservice.entity.MethodExecutionTimeEvent;
+import com.example.monitoringservice.service.TimeCheckerService;
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
 import com.example.payments.dto.InPaymentDto;
@@ -26,6 +28,7 @@ import java.util.List;
 @Slf4j
 public class ClientPaymentController {
     private final PaymentService paymentService;
+    private final TimeCheckerService timeCheckerService;
     private final GenericMapper<Payment, InPaymentDto> inPaymentMapper;
     private final GenericMapper<Card, CardDto> cardMapper;
     private final PaymentOutPaymentDtoMapper outPaymentMapper;
@@ -47,9 +50,9 @@ public class ClientPaymentController {
 
     @PostMapping("/_findAll")
     public List<OutPaymentDto> findAllByCardNumber(@RequestBody @Valid CardDto dto,
-                                              BindingResult bindingResult,
-                                              @AuthenticationPrincipal PersonDetails personDetails) {
-        if(bindingResult.hasErrors()) {
+                                                   BindingResult bindingResult,
+                                                   @AuthenticationPrincipal PersonDetails personDetails) {
+        if (bindingResult.hasErrors()) {
             throw new EntityValidationException("Card validation error", bindingResult);
         }
 
@@ -58,16 +61,27 @@ public class ClientPaymentController {
                 .map(payment -> outPaymentMapper.toDto(payment, personDetails.getUser()))
                 .toList();
     }
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public OutPaymentDto createTransaction(@RequestBody @Valid InPaymentDto dto,
-                                                 BindingResult bindingResult,
-                                                 @AuthenticationPrincipal PersonDetails personDetails) {
-        if(bindingResult.hasErrors()) {
+                                           BindingResult bindingResult,
+                                           @AuthenticationPrincipal PersonDetails personDetails) {
+        if (bindingResult.hasErrors()) {
             throw new EntityValidationException("Cannot create transaction", bindingResult);
         }
+        Long startTime = System.currentTimeMillis();
+
         Payment paymentToCreate = inPaymentMapper.toEntity(dto);
         Payment createdPayment = paymentService.create(paymentToCreate, personDetails.getUser());
+
+        Long endTime = System.currentTimeMillis();
+
+        MethodExecutionTimeEvent event = MethodExecutionTimeEvent.builder()
+                .methodName(log.getName())
+                .executionTime(endTime - startTime)
+                .build();
+        timeCheckerService.saveEvent(event);
         return outPaymentMapper.toDto(createdPayment, personDetails.getUser());
     }
 }
