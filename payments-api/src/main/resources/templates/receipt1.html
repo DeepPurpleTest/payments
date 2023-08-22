@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Receipt</title>
+    <link th:href="@{~/css/main.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body class="flex items-center justify-center h-screen">
+<div class="rounded-lg border shadow-lg p-10 w-3/5">
+    <div class="flex flex-row justify-between pb-4">
+        <div class="float-child-left">
+            <h2 class="text-xl font-bold">Receipt #<span class="text-green-600" th:text="${payment.getId()}"></span>
+            </h2>
+        </div>
+        <div class="float-child-right">
+            <div class="text-xl font-bold" th:text="${payment.getDate().getYear() +'/'+
+            (payment.getDate().getMonthValue() < 10 ? '0' + payment.getDate().getMonthValue() : payment.getDate().getMonthValue())  +'/'+
+            (payment.getDate().getDayOfMonth() < 10 ? '0' + payment.getDate().getDayOfMonth() : payment.getDate().getDayOfMonth())}"></div>
+        </div>
+    </div>
+    <h2 class="text-xl font-bold payment-details-margin">Payment Details</h2>
+    <table class="table-fixed w-2/6">
+        <tr>
+            <td>
+                <div class="text-green-600">Received by</div>
+                <div class="payment-details-margin" th:text="${sender.getName() + ' ' + sender.getSurname()}"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="text-green-600">Received from</div>
+                <div class="payment-details-margin" th:text="${receiver.getName() + ' ' + receiver.getSurname()}"></div>
+            </td>
+        </tr>
+    </table>
+    <div class="flex flex-row-reverse div-right">
+        <div class="float-child-right">
+            <h2 class="text-xl font-bold">
+                Amount: <span class="text-green-600" th:text="${payment.getAmount()}"></span>
+            </h2>
+        </div>
+    </div>
+</div>
+</body>
+</html>

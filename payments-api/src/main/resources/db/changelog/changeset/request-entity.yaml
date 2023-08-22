@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: request-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: request
+      changes:
+        - createTable:
+            tableName: request
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+
+              - column:
+                  name: card_number
+                  type: varchar(20)
+                  constraints:
+                    foreignKeyName: request_card_fk
+                    referencedTableName: card
+                    referencedColumnNames: card_number
+                    nullable: false
+
+              - column:
+                  name: status_id
+                  type: varchar(20)
+                  constraints:
+                    foreignKeyName: request_status_fk
+                    referencedTableName: request_status
+                    referencedColumnNames: id
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    foreignKeyName: request_user_fk
+                    referencedTableName: user_account
+                    referencedColumnNames: id
+                    nullable: false
+
+              - column:
+                  name: admin_id
+                  type: int
+                  constraints:
+                    foreignKeyName: request_admin_fk
+                    referencedTableName: user_account
+                    referencedColumnNames: id
+                    nullable: true
+

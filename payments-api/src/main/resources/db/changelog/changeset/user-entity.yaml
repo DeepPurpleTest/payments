@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: user-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+           - tableExists:
+              tableName: user_account
+      changes:
+        - createTable:
+            tableName: user_account
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+
+              - column:
+                  name: name
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: surname
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: middle_name
+                  type: varchar(40)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: password
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: phone_number
+                  type: varchar(16)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+
+              - column:
+                  name: role_id
+                  type: varchar(20)
+                  defaultValue: CLIENT
+                  constraints:
+                    foreignKeyName: user_role_fk
+                    referencedTableName: role
+                    referencedColumnNames: id
+                    deleteCascade: true
+
+              - column:
+                  name: status_id
+                  type: varchar(20)
+                  defaultValue: ACTIVE
+                  constraints:
+                    foreignKeyName: user_status_fk
+                    referencedTableName: status
+                    referencedColumnNames: id
+                    deleteCascade: true
+
+

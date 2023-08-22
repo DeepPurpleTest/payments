@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: role-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: role
+
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: varchar(20)
+                  constraints:
+                    primaryKey: true

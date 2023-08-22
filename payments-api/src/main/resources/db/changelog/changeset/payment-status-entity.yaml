@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: transaction-status-entity
+      author: moksem
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: payment_status
+      changes:
+        - createTable:
+            tableName: payment_status
+            columns:
+              - column:
+                  name: id
+                  type: varchar(20)
+                  constraints:
+                    primaryKey: true
+

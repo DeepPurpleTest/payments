@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="card dataset" author="moksem">
+        <insert tableName="card">
+            <column name="card_number" value="4787382373512113"/>
+            <column name="user_id" value="1"/>
+            <column name="balance" value="27.54"/>
+            <column name="status_id" value="ACTIVE"/>
+        </insert>
+        <insert tableName="card">
+            <column name="card_number" value="4337273020704515"/>
+            <column name="user_id" value="1"/>
+            <column name="balance" value="50.0"/>
+            <column name="status_id" value="ACTIVE"/>
+        </insert>
+        <insert tableName="card">
+            <column name="card_number" value="4440602870850073"/>
+            <column name="user_id" value="2"/>
+            <column name="balance" value="555.0"/>
+            <column name="status_id" value="ACTIVE"/>
+        </insert>
+        <rollback>
+            DELETE FROM card;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
