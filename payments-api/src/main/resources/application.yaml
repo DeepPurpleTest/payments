@@ -3,14 +3,15 @@ server:
 
 logging:
   level:
-    root: info
-    org.hibernate: info
-    org.org.springframework.web: info
+    root: debug
+    org.hibernate: debug
+    org.org.springframework.web: debug
 #
 #springdoc:
 #  model-and-view-allowed: true
 ---
 spring:
+
   main:
     allow-bean-definition-overriding: true
 
@@ -37,11 +38,11 @@ spring:
     url: jdbc:mysql://localhost:3306/payments?createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: payments_monitoring_db
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      database: payments_monitoring_db
 
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -56,6 +57,8 @@ spring:
     always-use-message-format: false
     encoding: UTF-8
     fallback-to-system-locale: true
+
+
 
 #RabbitMQ alert queue configuration
 alert-queue:
