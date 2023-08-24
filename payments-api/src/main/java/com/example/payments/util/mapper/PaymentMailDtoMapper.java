@@ -12,6 +12,6 @@ public interface PaymentMailDtoMapper extends GenericMapper<Payment, PaymentMail
     @Mapping(source = "payment.receiver", target = "receiver")
     @Mapping(source = "payment.sender.user", target = "userSender")
     @Mapping(source = "payment.receiver.user", target = "userReceiver")
-    @Mapping(source = "payment.date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
+//    @Mapping(source = "payment.date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     PaymentMailDto toDto(Payment payment);
 }
