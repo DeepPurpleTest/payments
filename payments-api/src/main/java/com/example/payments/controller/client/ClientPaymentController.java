@@ -69,7 +69,7 @@ public class ClientPaymentController {
         }
 
         Payment paymentToCreate = inPaymentMapper.toEntity(dto);
-        Payment createdPayment = paymentService.create(paymentToCreate, personDetails.getUser());
+        Payment createdPayment = paymentService.createTransaction(paymentToCreate, personDetails.getUser());
 
         return outPaymentMapper.toDto(createdPayment, personDetails.getUser());
     }

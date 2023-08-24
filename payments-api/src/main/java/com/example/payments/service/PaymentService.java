@@ -3,6 +3,7 @@ package com.example.payments.service;
 import com.example.payments.entity.*;
 import com.example.payments.repository.CardRepository;
 import com.example.payments.repository.PaymentRepository;
+import com.example.payments.util.annotation.LogExecutionTime;
 import com.example.payments.util.exception.EntityNotFoundException;
 import com.example.payments.util.exception.TransactionException;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,8 @@ public class PaymentService {
     }
 
     @Transactional
-    public Payment create(Payment payment, User currentUser) {
+    @LogExecutionTime
+    public Payment createTransaction(Payment payment, User currentUser) {
         Optional<Card> senderById = cardRepository.findByCardNumber(payment.getSender().getCardNumber(), Card.class);
         Optional<Card> receiverById = cardRepository.findByCardNumber(payment.getReceiver().getCardNumber(), Card.class);
 
