@@ -1,7 +1,5 @@
 package com.example.payments.controller.client;
 
-import com.example.monitoringservice.entity.MethodExecutionTimeEvent;
-import com.example.monitoringservice.service.TimeCheckerService;
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
 import com.example.payments.dto.InPaymentDto;
@@ -28,7 +26,6 @@ import java.util.List;
 @Slf4j
 public class ClientPaymentController {
     private final PaymentService paymentService;
-    private final TimeCheckerService timeCheckerService;
     private final GenericMapper<Payment, InPaymentDto> inPaymentMapper;
     private final GenericMapper<Card, CardDto> cardMapper;
     private final PaymentOutPaymentDtoMapper outPaymentMapper;
@@ -70,18 +67,10 @@ public class ClientPaymentController {
         if (bindingResult.hasErrors()) {
             throw new EntityValidationException("Cannot create transaction", bindingResult);
         }
-        Long startTime = System.currentTimeMillis();
 
         Payment paymentToCreate = inPaymentMapper.toEntity(dto);
-        Payment createdPayment = paymentService.create(paymentToCreate, personDetails.getUser());
+        Payment createdPayment = paymentService.createTransaction(paymentToCreate, personDetails.getUser());
 
-        Long endTime = System.currentTimeMillis();
-
-        MethodExecutionTimeEvent event = MethodExecutionTimeEvent.builder()
-                .methodName(log.getName())
-                .executionTime(endTime - startTime)
-                .build();
-        timeCheckerService.saveEvent(event);
         return outPaymentMapper.toDto(createdPayment, personDetails.getUser());
     }
 }
