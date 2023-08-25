@@ -4,7 +4,7 @@ import com.example.payments.dto.CardDto;
 import com.example.payments.entity.Card;
 import com.example.payments.service.CardService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
+import com.example.payments.util.mapper.CardDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/admin/card")
 @RequiredArgsConstructor
 public class AdminCardController {
-    private final GenericMapper<Card, CardDto> mapper;
+    private final CardDtoMapper mapper;
     private final CardService cardService;
 
     // for admin

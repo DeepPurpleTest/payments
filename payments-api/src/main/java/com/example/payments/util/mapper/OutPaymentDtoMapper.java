@@ -6,14 +6,11 @@ import com.example.payments.entity.Payment;
 import com.example.payments.entity.User;
 import org.mapstruct.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
-@Mapper(componentModel = "spring", uses = CardDtoMapper.class)
-public interface PaymentOutPaymentDtoMapper extends GenericMapper<Payment, OutPaymentDto> {
+@Mapper(componentModel = "spring", uses = {CardDtoMapper.class, CustomDateMapper.class})
+public interface OutPaymentDtoMapper extends GenericMapper<Payment, OutPaymentDto> {
     @Mapping(source = "payment.id", target = "id")
     @Mapping(source = "payment.status", target = "status")
-    @Mapping(source = "payment.date", target = "date", qualifiedByName = "customDateMapping")
+    @Mapping(source = "payment.date", target = "date")
     OutPaymentDto toDto(Payment payment, User user);
 
     @AfterMapping
@@ -27,11 +24,7 @@ public interface PaymentOutPaymentDtoMapper extends GenericMapper<Payment, OutPa
             dto.currentUserCard(receiver.getCardNumber());
             dto.currentCardBalance(payment.getReceiverBalanceAfterPayment());
         }
-
-        dto.date(payment.getDate().toInstant(ZoneOffset.UTC).toEpochMilli());
     }
 
-    default Long customDateMapping(LocalDateTime date) {
-        return date.toInstant(ZoneOffset.UTC).toEpochMilli(); // todo genericMapper for two entities
-    }
+
 }

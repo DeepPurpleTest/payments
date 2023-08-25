@@ -2,12 +2,11 @@ package com.example.payments.controller.client;
 
 import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
-import com.example.payments.entity.Card;
+import com.example.payments.dto.view.RequestView;
 import com.example.payments.entity.Request;
 import com.example.payments.service.RequestService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
-import com.example.payments.dto.view.RequestView;
+import com.example.payments.util.mapper.CardDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientRequestController {
     private final RequestService requestService;
-    private final GenericMapper<Card, CardDto> cardMapper;
+    private final CardDtoMapper cardMapper;
 
     // admin/client
     @GetMapping("/{id}")

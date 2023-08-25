@@ -6,7 +6,7 @@ import com.example.payments.entity.Card;
 import com.example.payments.entity.CardType;
 import com.example.payments.service.CardService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
+import com.example.payments.util.mapper.CardDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/client/card")
 @RequiredArgsConstructor
 public class ClientCardController {
-    private final GenericMapper<Card, CardDto> mapper;
+    private final CardDtoMapper mapper;
     private final CardService cardService;
 
     // for user

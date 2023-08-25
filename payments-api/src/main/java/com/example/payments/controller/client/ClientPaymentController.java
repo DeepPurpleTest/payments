@@ -4,12 +4,12 @@ import com.example.payments.configuration.securityconfig.PersonDetails;
 import com.example.payments.dto.CardDto;
 import com.example.payments.dto.InPaymentDto;
 import com.example.payments.dto.OutPaymentDto;
-import com.example.payments.entity.Card;
 import com.example.payments.entity.Payment;
 import com.example.payments.service.PaymentService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
-import com.example.payments.util.mapper.PaymentOutPaymentDtoMapper;
+import com.example.payments.util.mapper.CardDtoMapper;
+import com.example.payments.util.mapper.InPaymentDtoMapper;
+import com.example.payments.util.mapper.OutPaymentDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +26,9 @@ import java.util.List;
 @Slf4j
 public class ClientPaymentController {
     private final PaymentService paymentService;
-    private final GenericMapper<Payment, InPaymentDto> inPaymentMapper;
-    private final GenericMapper<Card, CardDto> cardMapper;
-    private final PaymentOutPaymentDtoMapper outPaymentMapper;
+    private final InPaymentDtoMapper inPaymentMapper;
+    private final CardDtoMapper cardMapper;
+    private final OutPaymentDtoMapper outPaymentMapper;
 
     @GetMapping("/all")
     public List<OutPaymentDto> findAll(@AuthenticationPrincipal PersonDetails personDetails) {

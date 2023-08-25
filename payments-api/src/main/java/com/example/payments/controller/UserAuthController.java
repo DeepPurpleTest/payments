@@ -7,7 +7,8 @@ import com.example.payments.dto.UserDto;
 import com.example.payments.entity.User;
 import com.example.payments.service.UserService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
+import com.example.payments.util.mapper.RegistrationDtoMapper;
+import com.example.payments.util.mapper.UserDtoMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 public class UserAuthController {
-    private final GenericMapper<User, RegistrationDto> registrationMapper;
-    private final GenericMapper<User, UserDto> userMapper;
+    private final RegistrationDtoMapper registrationMapper;
+    private final UserDtoMapper userMapper;
     private final UserService userService;
 
     @PostMapping("/_login")
@@ -58,7 +59,7 @@ public class UserAuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public RegistrationDto register(@RequestBody @Valid RegistrationDto registrationDto,
+    public UserDto register(@RequestBody @Valid RegistrationDto registrationDto,
                                     BindingResult bindingResult,
                                     HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
@@ -67,7 +68,7 @@ public class UserAuthController {
         User userToCreate = registrationMapper.toEntity(registrationDto);
         User createdUser = userService.create(userToCreate);
 //        request.login(createdUser.getPhoneNumber(), createdUser.getPassword());
-        return registrationMapper.toDto(createdUser);
+        return userMapper.toDto(createdUser);
     }
 
     @GetMapping("/account")
