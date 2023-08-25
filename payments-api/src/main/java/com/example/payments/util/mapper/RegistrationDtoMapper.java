@@ -5,5 +5,5 @@ import com.example.payments.entity.User;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface UserRegistrationDtoMapper extends GenericMapper<User, RegistrationDto>{
+public interface RegistrationDtoMapper extends GenericMapper<User, RegistrationDto>{
 }

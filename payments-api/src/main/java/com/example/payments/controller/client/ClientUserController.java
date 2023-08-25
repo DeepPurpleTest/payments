@@ -4,7 +4,7 @@ import com.example.payments.dto.UserDto;
 import com.example.payments.entity.User;
 import com.example.payments.service.UserService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
+import com.example.payments.util.mapper.UserDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ClientUserController {
     private final UserService userService;
-    private final GenericMapper<User, UserDto> mapper;
+    private final UserDtoMapper mapper;
 
     @PatchMapping("/update")
     public UserDto update(@RequestBody @Valid UserDto userDto,

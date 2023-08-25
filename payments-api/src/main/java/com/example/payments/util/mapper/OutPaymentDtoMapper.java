@@ -6,11 +6,11 @@ import com.example.payments.entity.Payment;
 import com.example.payments.entity.User;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", uses = CardDtoMapper.class)
-public interface PaymentOutPaymentDtoMapper extends GenericMapper<Payment, OutPaymentDto> {
+@Mapper(componentModel = "spring", uses = {CardDtoMapper.class, CustomDateMapper.class})
+public interface OutPaymentDtoMapper extends GenericMapper<Payment, OutPaymentDto> {
     @Mapping(source = "payment.id", target = "id")
     @Mapping(source = "payment.status", target = "status")
-    //@Mapping(source = "payment.date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "payment.date", target = "date")
     OutPaymentDto toDto(Payment payment, User user);
 
     @AfterMapping
@@ -25,4 +25,6 @@ public interface PaymentOutPaymentDtoMapper extends GenericMapper<Payment, OutPa
             dto.currentCardBalance(payment.getReceiverBalanceAfterPayment());
         }
     }
+
+
 }

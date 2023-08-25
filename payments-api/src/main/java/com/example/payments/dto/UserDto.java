@@ -2,11 +2,12 @@ package com.example.payments.dto;
 
 import com.example.payments.dto.identifiable.AbstractUserIdentifiable;
 import com.example.payments.entity.Role;
-import com.example.payments.util.ApplicationConstants.Validation;
+import com.example.payments.util.ApplicationConstants;
 import com.example.payments.util.validation.annotation.ContactNumberConstraint;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.Nullable;
@@ -18,27 +19,27 @@ import org.springframework.lang.Nullable;
 public class UserDto implements AbstractUserIdentifiable {
     @Nullable
     private Long id;
-    @NotEmpty
-    @Length(min = Validation.MIN_NAME_LENGTH,
-            max = Validation.MAX_NAME_LENGTH,
-            message = Validation.NAME_MESSAGE)
+    @Nullable
+    @Length(min = ApplicationConstants.Validation.MIN_NAME_LENGTH,
+            max = ApplicationConstants.Validation.MAX_NAME_LENGTH,
+            message = "{validation.name.error}")
     private String name;
-    @NotEmpty
-    @Length(min = Validation.MIN_SURNAME_LENGTH,
-            max = Validation.MAX_SURNAME_LENGTH,
-            message = Validation.SURNAME_MESSAGE)
+    @Nullable
+    @Length(min = ApplicationConstants.Validation.MIN_SURNAME_LENGTH,
+            max = ApplicationConstants.Validation.MAX_SURNAME_LENGTH,
+            message = "{validation.surname.error}")
     private String surname;
     @Nullable
-    @Length(min = Validation.MIN_MIDDLE_NAME_LENGTH,
-            max = Validation.MAX_MIDDLE_NAME_LENGTH,
-            message = Validation.MIDDLE_NAME_MESSAGE)
+    @Length(min = ApplicationConstants.Validation.MIN_MIDDLE_NAME_LENGTH,
+            max = ApplicationConstants.Validation.MAX_MIDDLE_NAME_LENGTH,
+            message = "{validation.middle_name.error}")
     private String middleName;
-    @NotEmpty
-    @ContactNumberConstraint
+    @Nullable
+    @ContactNumberConstraint(message = "{validation.phone_number.error}")
     private String phoneNumber;
 
     @Nullable
-    @Email
+    @Email(message = "{validation.email.error}")
     private String email;
 
     @Nullable

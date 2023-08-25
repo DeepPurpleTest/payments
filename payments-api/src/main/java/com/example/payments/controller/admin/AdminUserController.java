@@ -4,7 +4,7 @@ import com.example.payments.dto.UserDto;
 import com.example.payments.entity.User;
 import com.example.payments.service.UserService;
 import com.example.payments.util.exception.EntityValidationException;
-import com.example.payments.util.mapper.GenericMapper;
+import com.example.payments.util.mapper.UserDtoMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor // RequiredArgsConstructor for args we need
 public class AdminUserController {
     private final UserService userService; // final only for @RequiredArgsConstructor
-    private final GenericMapper<User, UserDto> mapper;
+    private final UserDtoMapper mapper;
 
     @GetMapping("/{id}")
     public UserDto find(@PathVariable("id") Long id) {
